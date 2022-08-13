@@ -4,7 +4,11 @@
   "description": "A weather forecast app using open weather API",
   "main": "index.js",
   "scripts": {
-    "test": "npm run test"
+    "test": "npm run test",
+    "format": "npx prettier  --write **/*.{html,json,md,json,yaml,yml,jsx}",
+    "format:check": "npx prettier  --check **/*.{html,json,md,json,yaml,yml}",
+    "lint": "npx stylelint \"**/*.css\" --fix && npx eslint . --fix",
+    "lint:check": "npx stylelint \"**/*.css\" && npx eslint ."
   },
   "repository": {
     "type": "git",
