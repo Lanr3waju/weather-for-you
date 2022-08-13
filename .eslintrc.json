@@ -1,0 +1,32 @@
+{
+  "env": {
+    "browser": true,
+    "es6": true,
+    "jest": true
+  },
+  "parser": "@babel/eslint-parser",
+  "parserOptions": {
+    "ecmaVersion": 2018,
+    "sourceType": "module",
+    "requireConfigFile": false
+  },
+  "extends": ["airbnb-base"],
+  "rules": {
+    "class-methods-use-this": 0,
+    "max-classes-per-file": 0,
+    "no-shadow": "off",
+    "no-param-reassign": 0,
+    "eol-last": "off",
+    "object-curly-newline": "off",
+    "arrow-parens": "off",
+    "import/extensions": [
+      0,
+      {
+        "js": "always",
+        "json": "always"
+      }
+    ],
+    "prefer-destructuring": ["error", { "object": true, "array": true }]
+  },
+  "ignorePatterns": ["dist/", "build/", "**/luxon*.js"]
+}
