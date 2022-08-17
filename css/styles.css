@@ -70,10 +70,8 @@ form {
   cursor: pointer;
 }
 
-.gif-img {
-  width: 20%;
-  border-top-right-radius: 12px;
-  border-bottom-left-radius: 12px;
+.weather-4-u {
+  display: block;
 }
 
 .error-prompt {

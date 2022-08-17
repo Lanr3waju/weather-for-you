@@ -16,7 +16,6 @@ const closeErrorPrompt = () => {
 };
 
 const fetchWeatherData = async cityLocation => {
-  img.classList.add('none');
   const unit = 'metric';
   try {
     const response = await fetch(
@@ -92,7 +91,6 @@ const fetchWeatherData = async cityLocation => {
     });
   } catch (e) {
     errorPrompt.classList.remove('none');
-    console.log(e);
   }
 };
 

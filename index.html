@@ -11,6 +11,28 @@
     <link rel="manifest" href="./site.webmanifest" />
   </head>
   <body>
+    <header>
+      <form>
+        <input type="text" class="input" placeholder="Enter gif to serch" id="text-inp" />
+        <button id="search" class="search" type="submit">
+          <img src="./img/icons/favicon-32x32.png" alt="search icon" />
+        </button>
+      </form>
+      <p id="city" class="city"></p>
+      <p id="days-date" class="days-date"></p>
+    </header>
+    <div id="error-prompt" class="error-prompt none">
+      <span id="error-msg" class="error-msg"
+        ><div>
+          Oops! We Ran into an error: <button type="button" class="close" id="close">close</button>
+        </div></span
+      >
+    </div>
+    <section>
+      <h2 class="weather-4-u">Weather For You</h2>
+      <div class="weather-data none" id="weather-data"></div>
+    </section>
+    <div class="lds-dual-ring" id="spinner"></div>
     <script defer src="./js/index.js"></script>
   </body>
 </html>
