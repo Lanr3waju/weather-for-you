@@ -1,4 +1,5 @@
 @import "https://fonts.googleapis.com/css2?family=Pacifico&display=swap";
+@import "https://fonts.googleapis.com/css2?family=DynaPuff&display=swap";
 
 body {
   color: #ffff;
@@ -58,6 +59,20 @@ header {
 
 .temp {
   display: flex;
+}
+
+.weather-4-u {
+  font-family: DynaPuff, cursive;
+  color: #c7c7c7;
+  text-shadow: 2px 4px 1px black;
+  font-size: 3em;
+  text-align: center;
+}
+
+.city,
+.days-date {
+  text-align: center;
+  font-size: large;
 }
 
 .weather-forecast,
@@ -147,9 +162,11 @@ form {
 }
 
 .error-msg {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
   color: red;
   padding: 0;
   margin: 0;
+  font-size: large;
 }
 
 .close {

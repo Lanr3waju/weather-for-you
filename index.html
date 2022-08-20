@@ -11,6 +11,12 @@
     <link rel="manifest" href="./site.webmanifest" />
   </head>
   <body>
+    <div id="error-prompt" class="error-prompt none">
+      <div id="error-msg" class="error-msg">
+        Oops! We Ran into an error, Please Enter the Location Again!
+        <button type="button" class="close" id="close">close</button>
+      </div>
+    </div>
     <header>
       <form>
         <input type="text" class="input" placeholder="Enter location to search" id="text-inp" />
@@ -18,22 +24,17 @@
           <img src="./img/icons/favicon-32x32.png" alt="search icon" />
         </button>
       </form>
-      <p id="city" class="city"></p>
-      <p id="days-date" class="days-date"></p>
     </header>
-    <div id="error-prompt" class="error-prompt none">
-      <div id="error-msg" class="error-msg">
-        <div>
-          Oops! We Ran into an error: <button type="button" class="close" id="close">close</button>
-        </div>
-      </div>
-    </div>
 
-    <section>
-      <h2 class="weather-4-u">Weather For You</h2>
-      <div class="current-forecast" id="current-forecast"></div>
-      <div class="weather-data none" id="weather-data"></div>
-    </section>
+    <main>
+      <section>
+        <h2 class="weather-4-u">Weather For You by Lanr3waju</h2>
+        <p id="city" class="city"></p>
+        <p id="days-date" class="days-date"></p>
+        <div class="current-forecast" id="current-forecast"></div>
+        <div class="weather-data none" id="weather-data"></div>
+      </section>
+    </main>
     <div class="lds-dual-ring" id="spinner"></div>
     <script defer src="./js/index.js"></script>
   </body>
