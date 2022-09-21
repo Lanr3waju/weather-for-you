@@ -1,16 +1,16 @@
-# Project Name
+# Weather For You
 
-> One paragraph statement about the project.
+> This is a weather app that displays the weather forecast for 4 days.
 
-![screenshot](./app_screenshot.png)
+![screenshot](./img/preview.PNG)
 
 Additional description about the project and its features.
 
 ## Built With
 
-- Major languages,
-- frameworks,
-- technologies used
+- HTML, CSS, JavaScript
+- OpenWeatherMap Api, Geo-location Api, Geo-coder Api,
+- Fetch API, Async, Await.
 
 ## Live Demo
 
@@ -21,7 +21,7 @@ Additional description about the project and its features.
 - Clone the project
 
 ```bash
-git clone https://github.com/user/html-css-template.git
+git clone https://github.com/Lanr3waju/weather-for-you.git
 
 ```
 
@@ -70,9 +70,9 @@ npm run html-validator
 
 ## 👤 Author
 
-- Github: [@author](https://github.com/author)
-- Twitter: [@author](https://twitter.com/author)
-- Linkedin: [@author](https://www.linkedin.com/in/author/)
+- Github: [@author](https://github.com/lanr3waju)
+- Twitter: [@author](https://twitter.com/abass-wasi)
+- Linkedin: [@author](https://www.linkedin.com/in/abass-abdul-wasi-53883422a/)
 
 ## 🤝 Contributing
 
@@ -86,9 +86,11 @@ Give a ⭐️ if you like this project!
 
 ## Acknowledgments
 
-- Hat tip to anyone whose code was used
-- Inspiration, resources/assets used
-- etc
+- [openWeatherMap](https://openweathermap.org/)
+- [openCage Geocoding Api](https://opencagedata.com/api)
+- [Bgjar SVG ](https://bgjar.com/)
+- [amCharts Weather Icons](https://www.amcharts.com/)
+- [SVG Backgrounds](https://www.svgbackgrounds.com/)
 
 ## 📝 License
 

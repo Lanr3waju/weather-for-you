@@ -1,3 +1,225 @@
-* {
+@import "https://fonts.googleapis.com/css2?family=Pacifico&display=swap";
+@import "https://fonts.googleapis.com/css2?family=DynaPuff&display=swap";
+
+body {
+  color: #ffff;
+  background: url("../img/liquid.svg");
+  background-size: cover;
+  font-family: Pacifico, cursive;
   margin: 0;
+  padding: 10px;
+  min-height: 100vh;
+  font-size: 12px;
+}
+
+.cloudy,
+.sunny,
+.snowy,
+.rainy {
+  background-size: cover;
+  background-repeat: no-repeat;
+  opacity: 1;
+  animation: back-img 10s linear infinite;
+}
+
+.cloudy {
+  background: url("../img/Cloudy.svg");
+  background-size: cover;
+}
+
+.sunny {
+  background: url("../img/sun-tornado.svg");
+  background-size: cover;
+}
+
+.snowy {
+  background: url("../img/Snow.svg");
+  background-size: cover;
+}
+
+.rainy {
+  background: url("../img/Sprinkle.svg");
+  background-size: cover;
+}
+
+.thunder {
+  background: url("../img/animated/thunder.svg");
+  background-color: #220c3f80;
+  background-size: cover;
+}
+
+ul {
+  list-style-type: none;
+}
+
+header {
+  font-size: 300%;
+  font-weight: bold;
+}
+
+.temp {
+  display: flex;
+}
+
+.weather-4-u {
+  font-family: DynaPuff, cursive;
+  color: #c7c7c7;
+  text-shadow: 2px 4px 1px black;
+  font-size: 3em;
+  text-align: center;
+}
+
+.city,
+.days-date {
+  text-align: center;
+  font-size: large;
+}
+
+.weather-forecast,
+.current {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: linear-gradient(135deg, #220c7265, #250a5863);
+  border: 1px solid #e1e1e12e;
+  border-radius: 5px;
+  color: #ffff;
+  min-width: 20%;
+  box-shadow: #32325d40 0 50px 100px -20px, #0000004d 0 30px 60px -30px, #0a254059 0 -2px 6px 0 inset;
+  padding: 8px;
+  margin: 10px;
+}
+
+.current {
+  background: linear-gradient(135deg, #220c7218, #250a5828);
+  font-size: large;
+}
+
+.weather-data {
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+form {
+  display: flex;
+  margin: 20px auto;
+  justify-content: center;
+}
+
+.input {
+  width: 60%;
+  border-radius: 10px;
+  padding: 10px;
+  border: none;
+}
+
+.input:focus {
+  border: none;
+  outline: 2px solid olivedrab;
+}
+
+.input::placeholder {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.search {
+  border: none;
+  width: 60px;
+  padding: 0;
+  background-color: #e6d8e700;
+  cursor: pointer;
+}
+
+.weather,
+.current-weather {
+  padding: 10px 20px 10px 0;
+  border-right: 2px solid #19044b;
+  font-size: large;
+  border-radius: 15px;
+  min-width: 60%;
+}
+
+.current-weather {
+  border: none;
+  padding: 0 8%;
+}
+
+.current-icon {
+  width: 100%;
+}
+
+.error-prompt {
+  position: absolute;
+  display: flex;
+  width: 100%;
+  height: 120%;
+  background-color: #000000f7;
+  justify-content: center;
+  align-items: center;
+  z-index: 50;
+}
+
+.error-msg {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  color: red;
+  padding: 0;
+  margin: 0;
+  font-size: large;
+}
+
+.close {
+  display: block;
+  padding: 5px 7px;
+  cursor: pointer;
+  margin: 20px auto;
+  font-size: large;
+  text-align: center;
+  border: none;
+  background-color: #ffff;
+  transition: all 200ms ease-in;
+}
+
+.close:hover {
+  background-color: #e2e2e2;
+  transition: all 200ms ease-in;
+}
+
+.close:active {
+  background-color: #858585;
+  transition: all 20ms ease-in;
+}
+
+.lds-dual-ring {
+  margin: 80px auto 0;
+  width: 80px;
+  height: 80px;
+  border-radius: 10px;
+}
+
+.lds-dual-ring::after {
+  content: " ";
+  display: block;
+  width: 64px;
+  height: 64px;
+  margin: 8px auto;
+  border-radius: 50%;
+  border: 6px solid #e6e9f1;
+  border-color: #e6e9f1 transparent;
+  animation: lds-dual-ring 1.2s linear infinite;
+}
+
+.none {
+  display: none;
+}
+
+@keyframes lds-dual-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }
