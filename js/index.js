@@ -21,7 +21,7 @@ const weatherForYouUi = (data, cityName, countryName, weatherForBg) => {
   appDisplay.innerHTML = '';
 
   data.forEach(item => {
-    const { maxTemp, mainTemp, minTemp, feelsLike, date, weatherDesc } = item;
+    const { maxTemp, mainTemp, minTemp, feelsLike, date, weatherDesc} = item;
     const weatherForecast = document.createElement('div');
     weatherForecast.className = 'weather-forecast';
 
@@ -120,11 +120,11 @@ const weatherForYouUi = (data, cityName, countryName, weatherForBg) => {
   weatherDesc.textContent = data[0].weatherDesc;
 
   weatherUl.className = 'current-weather';
-  const mainTempTT = document.createElement('li');
-  mainTempTT.className = 'current-main';
-  const mainTempTTVal = document.createElement('p');
-  mainTempTTVal.textContent = `Main Temperature (Feels like): ${data[0].mainTemp}°C - ${data[0].feelsLike}°C`;
-  mainTempTT.append(mainTempTTVal);
+  const humidity = document.createElement('li');
+  humidity.className = 'current-main';
+  const humidityVal = document.createElement('p');
+  humidityVal.textContent = `Humidity: ${data[0].humid}%`;
+  humidity.append(humidityVal);
 
   const maxMinTempTT = document.createElement('li');
   maxMinTempTT.className = 'current-max-min';
@@ -134,7 +134,7 @@ const weatherForYouUi = (data, cityName, countryName, weatherForBg) => {
 
 
   weatherTempData.append(mainTemp, feelsLike, maxMinTemp);
-  weatherUl.append(weatherDesc, mainTempTT, maxMinTempTT);
+  weatherUl.append(weatherDesc, humidity, maxMinTempTT);
   weatherForecast.append(weatherTempData, ico, weatherUl);
 
   currentForecast.classList.remove('none');
@@ -174,6 +174,7 @@ const fetchWeatherData = async cityLocation => {
     const data = await response.json();
     let { list: forecast } = data;
     forecast = [...forecast.slice(0, 28)];
+    console.log(forecast)
     const { city: { name: cityName } } = data;
     const { city: { country: countryName } } = data;
 
@@ -185,8 +186,9 @@ const fetchWeatherData = async cityLocation => {
           temp, temp_max: tempMax,
           temp_min: tempMin,
           feels_like: feels,
+          humidity,
         },
-      dt_txt: dateText,
+      dt_txt: dateText, wind: {speed: speed},
       } = day;
       const weatherItem = {
         weather: day.weather[0].main,
@@ -196,6 +198,8 @@ const fetchWeatherData = async cityLocation => {
         minTemp: tempMin,
         feelsLike: feels,
         date: dateText,
+        humid: humidity,
+        windSpeed: speed,
         icon: day.weather[0].icon,
       };
       apiCall = [...apiCall, weatherItem];

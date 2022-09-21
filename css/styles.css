@@ -87,7 +87,7 @@ header {
   color: #ffff;
   min-width: 40%;
   flex-wrap: wrap;
-  box-shadow: #32325d40 0 50px 100px -20px, #cfa2a24d 0 30px 60px -30px, #79899a59 0 -2px 6px 0 inset;
+  box-shadow: #32325d40 0 20px 40px -20px, #cfa2a24d 0 15px 30px -30px, #79899a59 0 -2px 6px 0 inset;
   padding: 8px;
   margin: 10px;
 }
@@ -119,6 +119,10 @@ header {
   text-transform: capitalize;
 }
 
+.search-icon {
+  width: 20px;
+}
+
 .weather-description {
   font-weight: bold;
   font-size: 25px;
@@ -143,25 +147,26 @@ form {
 
 .input {
   width: 60%;
-  border-radius: 10px;
+  border-radius: 10px 0 0 10px;
   padding: 10px;
   border: none;
 }
 
 .input:focus {
   border: none;
-  outline: 2px solid olivedrab;
+  outline: none;
 }
 
 .input::placeholder {
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-family: 'Reem Kufi Fun', sans-serif;
+  word-spacing: 3px;
 }
 
 .search {
   border: none;
-  width: 60px;
-  padding: 0;
-  background-color: #e6d8e700;
+  border-radius: 0 10px 10px 0;
+  padding: 5px;
+  background-color: #ffff;
   cursor: pointer;
 }
 
