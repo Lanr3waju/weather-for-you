@@ -4,7 +4,10 @@
 
 ![screenshot](./img/preview.PNG)
 
-Additional description about the project and its features.
+## The weather app displays weather data for the location entered in the search bar or by obtaining the location of the deviceif user allows location access
+
+- The units of the weather data are in metric by default, but can be switched to imperial based on user's preference with a toggle button provided.
+- The preferred unit of the user is saved so the user won't have to select it again on reload.
 
 ## Built With
 

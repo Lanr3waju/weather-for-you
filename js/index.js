@@ -227,6 +227,21 @@ const fetchWeatherData = async (cityLocation = localStorage.getItem('city')) => 
   }
 };
 
+const toggleUnits = () => {
+  if (toggle.checked === true) {
+    tempUnit = 'imperial';
+    windUnit = 'm/h';
+    tempSymbol = '° F';
+    localStorage.setItem('unit', 'imperial');
+  } else {
+    tempUnit = 'metric';
+    windUnit = 'km/h';
+    tempSymbol = '° C';
+    localStorage.setItem('unit', 'metric');
+  }
+  fetchWeatherData();
+};
+
 const successCallBack = async position => {
   const { latitude, longitude } = position.coords;
   const response = await fetch(`
