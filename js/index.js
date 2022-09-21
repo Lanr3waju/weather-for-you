@@ -6,7 +6,12 @@ const appDisplay = document.querySelector('#weather-data');
 const city = document.querySelector('#city');
 const displayDate = document.querySelector('#days-date');
 const currentForecast = document.querySelector('#current-forecast');
+const toggle = document.querySelector('#toggle');
 const body = document.querySelector('body');
+const inp = document.querySelector('#text-inp');
+let tempUnit = 'metric';
+let windUnit = 'km/h';
+let tempSymbol = '° C';
 const daysOfTheWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 const dateToday = new Date().getDay();
 
@@ -14,6 +19,15 @@ const toDay = daysOfTheWeek[dateToday];
 
 const emptySearchBox = (inp) => {
   inp.value = '';
+};
+
+const checkUnitBeforeLoad = () => {
+  if (localStorage.getItem('unit') === 'imperial') {
+    toggle.click();
+    tempUnit = 'imperial';
+    windUnit = 'm/h';
+    tempSymbol = '° F';
+  }
 };
 
 const weatherForYouUi = (data, cityName, countryName, weatherForBg) => {
@@ -41,13 +55,13 @@ const weatherForYouUi = (data, cityName, countryName, weatherForBg) => {
     const mainTempEl = document.createElement('li');
     mainTempEl.className = 'temp';
     const mainTempVal = document.createElement('p');
-    mainTempVal.textContent = `Main-Temperature (Feels-Like): ${mainTemp}°C - ${feelsLike}°C`;
+    mainTempVal.textContent = `Main-Temperature (Feels-Like): ${mainTemp} ${tempSymbol} - ${feelsLike} ${tempSymbol}`;
     mainTempEl.append(mainTempVal);
 
     const maxMinTempEl = document.createElement('li');
     maxMinTempEl.className = 'temp';
     const maxMinTempVal = document.createElement('p');
-    maxMinTempVal.textContent = `Max-Min Temperature: ${maxTemp}°C - ${minTemp}°C`;
+    maxMinTempVal.textContent = `Max-Min Temperature: ${maxTemp} ${tempSymbol} - ${minTemp} ${tempSymbol}`;
     maxMinTempEl.append(maxMinTempVal);
 
     const ico = document.createElement('img');
@@ -98,18 +112,18 @@ const weatherForYouUi = (data, cityName, countryName, weatherForBg) => {
 
   const mainTemp = document.createElement('li');
   mainTemp.className = 'current-temp';
-  mainTemp.textContent = `${data[0].mainTemp}  ° C`;
+  mainTemp.textContent = `${data[0].mainTemp} ${tempSymbol}`;
 
   const feelsLike = document.createElement('li');
   feelsLike.className = 'current-feels-like';
   const feelsLikeVal = document.createElement('p');
-  feelsLikeVal.textContent = `Feels Like ${data[0].feelsLike}°C`;
+  feelsLikeVal.textContent = `Feels Like ${data[0].feelsLike} ${tempSymbol}`;
   feelsLike.append(feelsLikeVal);
 
   const maxMinTemp = document.createElement('li');
   maxMinTemp.className = 'current-max-min';
   const maxMinTempVal = document.createElement('p');
-  maxMinTempVal.textContent = `Max-Min Temperature: ${data[0].maxTemp}°C - ${data[0].minTemp}°C `;
+  maxMinTempVal.textContent = `Max-Min Temperature: ${data[0].maxTemp} ${tempSymbol} - ${data[0].minTemp} ${tempSymbol} `;
   maxMinTemp.append(maxMinTempVal);
 
   const ico = document.createElement('img');
@@ -131,7 +145,7 @@ const weatherForYouUi = (data, cityName, countryName, weatherForBg) => {
   const windSpeed = document.createElement('li');
   windSpeed.className = 'wind-speed';
   const windSpeedVal = document.createElement('p');
-  windSpeedVal.textContent = `Wind Speed: ${data[0].windSpeed}km/h `;
+  windSpeedVal.textContent = `Wind Speed: ${data[0].windSpeed} ${windUnit}`;
   windSpeed.append(windSpeedVal);
 
   weatherTempData.append(mainTemp, feelsLike, maxMinTemp);
@@ -165,11 +179,10 @@ const weatherForYouUi = (data, cityName, countryName, weatherForBg) => {
   }
 };
 
-const fetchWeatherData = async cityLocation => {
-  const unit = 'metric';
+const fetchWeatherData = async (cityLocation = localStorage.getItem('city')) => {
   try {
     const response = await fetch(
-      `https://api.openweathermap.org/data/2.5/forecast?q=${cityLocation}&APPID=194095d7d7f3bbd8e788854eb49fa87b&units=${unit}`,
+      `https://api.openweathermap.org/data/2.5/forecast?q=${cityLocation}&APPID=194095d7d7f3bbd8e788854eb49fa87b&units=${tempUnit}`,
       { mode: 'cors' },
     );
     const data = await response.json();
@@ -220,6 +233,7 @@ const successCallBack = async position => {
     https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=638bda15a7104f78984174b3cfba1ef1`);
   const data = await response.json();
   const location = data.results[0].components.state;
+  localStorage.setItem('city', location);
   fetchWeatherData(location);
 };
 
@@ -236,18 +250,20 @@ const clickToSearchWeather = event => {
   event.preventDefault();
   spinner.classList.remove('none');
   appDisplay.classList.add('none');
-  currentForecast.classList.add('none');
-  const inp = document.querySelector('#text-inp');
   const cityToSearch = inp.value;
+  localStorage.setItem('city', cityToSearch);
+  currentForecast.classList.add('none');
   fetchWeatherData(cityToSearch);
   emptySearchBox(inp);
 };
 
 const startApp = () => {
+  checkUnitBeforeLoad();
   spinner.classList.remove('none');
   fetchUserLocation();
   search.addEventListener('submit', clickToSearchWeather);
   closeError.addEventListener('click', () => { errorPrompt.classList.add('none'); });
+  toggle.addEventListener('click', toggleUnits);
 };
 
 startApp();
