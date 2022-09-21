@@ -21,7 +21,7 @@ const weatherForYouUi = (data, cityName, countryName, weatherForBg) => {
   appDisplay.innerHTML = '';
 
   data.forEach(item => {
-    const { maxTemp, mainTemp, minTemp, feelsLike, date, weather, weatherDesc } = item;
+    const { maxTemp, mainTemp, minTemp, feelsLike, date, weatherDesc } = item;
     const weatherForecast = document.createElement('div');
     weatherForecast.className = 'weather-forecast';
 
@@ -29,45 +29,24 @@ const weatherForYouUi = (data, cityName, countryName, weatherForBg) => {
     weatherUl.className = 'weather';
 
     const dateEl = document.createElement('li');
+    dateEl.className = 'card-date'
     dateEl.textContent = date;
 
-    const weatherEl = document.createElement('li');
-    weatherEl.textContent = weather;
-
     const weatherDescEl = document.createElement('li');
+    weatherDescEl.className = 'weather-description'
     weatherDescEl.textContent = weatherDesc;
 
-    const mainDeg = document.createElement('sup');
-    mainDeg.textContent = 'o';
     const mainTempEl = document.createElement('li');
     mainTempEl.className = 'temp';
     const mainTempVal = document.createElement('p');
-    mainTempVal.textContent = `Temp: ${mainTemp} `;
-    mainTempEl.append(mainTempVal, mainDeg);
+    mainTempVal.textContent = `Main-Temperature (Feels-Like): ${mainTemp}°C - ${feelsLike}°C`;
+    mainTempEl.append(mainTempVal);
 
-    const maxDeg = document.createElement('sup');
-    maxDeg.textContent = 'o';
-    const maxTempEl = document.createElement('li');
-    maxTempEl.className = 'temp';
-    const maxTempVal = document.createElement('p');
-    maxTempVal.textContent = `Max Temp: ${maxTemp} `;
-    maxTempEl.append(maxTempVal, maxDeg);
-
-    const minDeg = document.createElement('sup');
-    minDeg.textContent = 'o';
-    const minTempEl = document.createElement('li');
-    minTempEl.className = 'temp';
-    const minTempVal = document.createElement('p');
-    minTempVal.textContent = `Min Temp: ${minTemp} `;
-    minTempEl.append(minTempVal, minDeg);
-
-    const feelsDeg = document.createElement('sup');
-    feelsDeg.textContent = 'o';
-    const feelsLikeEl = document.createElement('li');
-    feelsLikeEl.className = 'temp';
-    const feelsLikeVal = document.createElement('p');
-    feelsLikeVal.textContent = `Feels like: ${feelsLike} `;
-    feelsLikeEl.append(feelsLikeVal, feelsDeg);
+    const maxMinTempEl = document.createElement('li');
+    maxMinTempEl.className = 'temp';
+    const maxMinTempVal = document.createElement('p');
+    maxMinTempVal.textContent = `Max-Min Temperature: ${maxTemp}°C - ${minTemp}°C`;
+    maxMinTempEl.append(maxMinTempVal);
 
     const ico = document.createElement('img');
     ico.src = (`http://openweathermap.org/img/wn/${item.icon}@2x.png`);
@@ -75,13 +54,11 @@ const weatherForYouUi = (data, cityName, countryName, weatherForBg) => {
 
     weatherUl.append(
       dateEl,
-      weatherEl,
       weatherDescEl,
       mainTempEl,
-      maxTempEl,
-      minTempEl,
-      feelsLikeEl,
+      maxMinTempEl,
     );
+
     weatherForecast.append(weatherUl, ico);
     appDisplay.appendChild(weatherForecast);
     spinner.classList.add('none');
@@ -114,55 +91,51 @@ const weatherForYouUi = (data, cityName, countryName, weatherForBg) => {
   const weatherForecast = document.createElement('div');
   weatherForecast.className = 'current';
 
-  const weatherUl = document.createElement('ul');
-  weatherUl.className = 'current-weather';
+  const weatherTempData = document.createElement('ul');
+  weatherTempData.className = 'current-weather';
 
-  const date = document.createElement('li');
-  date.textContent = data[0].date;
-
-  const weather = document.createElement('li');
-  weather.textContent = data[0].weather;
-
-  const weatherDesc = document.createElement('li');
-  weatherDesc.textContent = data[0].weatherDesc;
-
-  const mainDeg = document.createElement('sup');
-  mainDeg.textContent = 'o';
   const mainTemp = document.createElement('li');
-  mainTemp.className = 'temp';
-  const mainTempVal = document.createElement('p');
-  mainTempVal.textContent = `Temp: ${data[0].mainTemp} `;
-  mainTemp.append(mainTempVal, mainDeg);
+  mainTemp.className = 'current-temp'
+  mainTemp.textContent = `${data[0].mainTemp}  ° C`;
 
-  const maxDeg = document.createElement('sup');
-  maxDeg.textContent = 'o';
-  const maxTemp = document.createElement('li');
-  maxTemp.className = 'temp';
-  const maxTempVal = document.createElement('p');
-  maxTempVal.textContent = `Max Temp: ${data[0].mainTemp} `;
-  maxTemp.append(maxTempVal, maxDeg);
-
-  const minDeg = document.createElement('sup');
-  minDeg.textContent = 'o';
-  const minTemp = document.createElement('li');
-  minTemp.className = 'temp';
-  const minTempVal = document.createElement('p');
-  minTempVal.textContent = `Min Temp: ${data[0].minTemp} `;
-  minTemp.append(minTempVal, minDeg);
-
-  const feelsDeg = document.createElement('sup');
-  feelsDeg.textContent = 'o';
   const feelsLike = document.createElement('li');
-  feelsLike.className = 'temp';
+  feelsLike.className = 'current-feels-like';
   const feelsLikeVal = document.createElement('p');
-  feelsLikeVal.textContent = `Feels like: ${data[0].feelsLike} `;
-  feelsLike.append(feelsLikeVal, feelsDeg);
+  feelsLikeVal.textContent = `Feels Like ${data[0].feelsLike}°C`;
+  feelsLike.append(feelsLikeVal);
+
+  const maxMinTemp = document.createElement('li');
+  maxMinTemp.className = 'current-max-min';
+  const maxMinTempVal = document.createElement('p');
+  maxMinTempVal.textContent = `Max-Min Temperature: ${data[0].maxTemp}°C - ${data[0].minTemp}°C `;
+  maxMinTemp.append(maxMinTempVal);
 
   const ico = document.createElement('img');
   ico.className = 'current-icon';
 
-  weatherUl.append(date, weather, weatherDesc, mainTemp, maxTemp, minTemp, feelsLike);
-  weatherForecast.append(weatherUl, ico);
+  const weatherUl = document.createElement('ul');
+
+  const weatherDesc = document.createElement('li');
+  weatherDesc.className = 'current-weather-desc'
+  weatherDesc.textContent = data[0].weatherDesc;
+
+  weatherUl.className = 'current-weather';
+  const mainTempTT = document.createElement('li');
+  mainTempTT.className = 'current-main';
+  const mainTempTTVal = document.createElement('p');
+  mainTempTTVal.textContent = `Main Temperature (Feels like): ${data[0].mainTemp}°C - ${data[0].feelsLike}°C`;
+  mainTempTT.append(mainTempTTVal);
+
+  const maxMinTempTT = document.createElement('li');
+  maxMinTempTT.className = 'current-max-min';
+  const maxMinTempTTVal = document.createElement('p');
+  maxMinTempTTVal.textContent = `Max-Min Temperature: ${data[0].maxTemp}°C - ${data[0].minTemp}°C `;
+  maxMinTempTT.append(maxMinTempTTVal);
+
+
+  weatherTempData.append(mainTemp, feelsLike, maxMinTemp);
+  weatherUl.append(weatherDesc, mainTempTT, maxMinTempTT);
+  weatherForecast.append(weatherTempData, ico, weatherUl);
 
   currentForecast.classList.remove('none');
   currentForecast.append(weatherForecast);
@@ -233,6 +206,7 @@ const fetchWeatherData = async cityLocation => {
   } catch (e) {
     errorPrompt.classList.remove('none');
     spinner.classList.add('none');
+    console.log(e)
   }
 };
 
