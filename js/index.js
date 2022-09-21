@@ -9,6 +9,7 @@ const currentForecast = document.querySelector('#current-forecast');
 const body = document.querySelector('body');
 const daysOfTheWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 const dateToday = new Date().getDay();
+
 const toDay = daysOfTheWeek[dateToday];
 
 const emptySearchBox = (inp) => {
@@ -17,11 +18,12 @@ const emptySearchBox = (inp) => {
 
 const weatherForYouUi = (data, cityName, countryName, weatherForBg) => {
   city.textContent = `${cityName}, ${countryName}`;
-  displayDate.textContent = `${toDay}, ${data[0].date}`;
+  displayDate.textContent = `${toDay},   ${data[0].date}`;
+
   appDisplay.innerHTML = '';
 
   data.forEach(item => {
-    const { maxTemp, mainTemp, minTemp, feelsLike, date, weatherDesc} = item;
+    const { maxTemp, mainTemp, minTemp, feelsLike, date, weatherDesc } = item;
     const weatherForecast = document.createElement('div');
     weatherForecast.className = 'weather-forecast';
 
@@ -29,11 +31,11 @@ const weatherForYouUi = (data, cityName, countryName, weatherForBg) => {
     weatherUl.className = 'weather';
 
     const dateEl = document.createElement('li');
-    dateEl.className = 'card-date'
+    dateEl.className = 'card-date';
     dateEl.textContent = date;
 
     const weatherDescEl = document.createElement('li');
-    weatherDescEl.className = 'weather-description'
+    weatherDescEl.className = 'weather-description';
     weatherDescEl.textContent = weatherDesc;
 
     const mainTempEl = document.createElement('li');
@@ -95,7 +97,7 @@ const weatherForYouUi = (data, cityName, countryName, weatherForBg) => {
   weatherTempData.className = 'current-weather';
 
   const mainTemp = document.createElement('li');
-  mainTemp.className = 'current-temp'
+  mainTemp.className = 'current-temp';
   mainTemp.textContent = `${data[0].mainTemp}  ° C`;
 
   const feelsLike = document.createElement('li');
@@ -116,25 +118,24 @@ const weatherForYouUi = (data, cityName, countryName, weatherForBg) => {
   const weatherUl = document.createElement('ul');
 
   const weatherDesc = document.createElement('li');
-  weatherDesc.className = 'current-weather-desc'
+  weatherDesc.className = 'current-weather-desc';
   weatherDesc.textContent = data[0].weatherDesc;
 
   weatherUl.className = 'current-weather';
   const humidity = document.createElement('li');
-  humidity.className = 'current-main';
+  humidity.className = 'humidity';
   const humidityVal = document.createElement('p');
   humidityVal.textContent = `Humidity: ${data[0].humid}%`;
   humidity.append(humidityVal);
 
-  const maxMinTempTT = document.createElement('li');
-  maxMinTempTT.className = 'current-max-min';
-  const maxMinTempTTVal = document.createElement('p');
-  maxMinTempTTVal.textContent = `Max-Min Temperature: ${data[0].maxTemp}°C - ${data[0].minTemp}°C `;
-  maxMinTempTT.append(maxMinTempTTVal);
-
+  const windSpeed = document.createElement('li');
+  windSpeed.className = 'wind-speed';
+  const windSpeedVal = document.createElement('p');
+  windSpeedVal.textContent = `Wind Speed: ${data[0].windSpeed}km/h `;
+  windSpeed.append(windSpeedVal);
 
   weatherTempData.append(mainTemp, feelsLike, maxMinTemp);
-  weatherUl.append(weatherDesc, humidity, maxMinTempTT);
+  weatherUl.append(weatherDesc, humidity, windSpeed);
   weatherForecast.append(weatherTempData, ico, weatherUl);
 
   currentForecast.classList.remove('none');
@@ -174,7 +175,7 @@ const fetchWeatherData = async cityLocation => {
     const data = await response.json();
     let { list: forecast } = data;
     forecast = [...forecast.slice(0, 28)];
-    console.log(forecast)
+
     const { city: { name: cityName } } = data;
     const { city: { country: countryName } } = data;
 
@@ -188,7 +189,7 @@ const fetchWeatherData = async cityLocation => {
           feels_like: feels,
           humidity,
         },
-      dt_txt: dateText, wind: {speed: speed},
+      dt_txt: dateText, wind: { speed },
       } = day;
       const weatherItem = {
         weather: day.weather[0].main,
@@ -210,7 +211,6 @@ const fetchWeatherData = async cityLocation => {
   } catch (e) {
     errorPrompt.classList.remove('none');
     spinner.classList.add('none');
-    console.log(e)
   }
 };
 

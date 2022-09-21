@@ -88,7 +88,7 @@ Give a ⭐️ if you like this project!
 
 - [openWeatherMap](https://openweathermap.org/)
 - [openCage Geocoding Api](https://opencagedata.com/api)
-- [Bgjar SVG ](https://bgjar.com/)
+- [Bgjar SVG](https://bgjar.com/)
 - [amCharts Weather Icons](https://www.amcharts.com/)
 - [SVG Backgrounds](https://www.svgbackgrounds.com/)
 
