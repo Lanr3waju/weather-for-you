@@ -8,6 +8,7 @@
 
 - The units of the weather data are in metric by default, but can be switched to imperial based on user's preference with a toggle button provided.
 - The preferred unit of the user is saved so the user won't have to select it again on reload.
+- The user input is screened to prevent useless HTTP requests.
 
 ## Built With
 

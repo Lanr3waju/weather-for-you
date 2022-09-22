@@ -9,7 +9,6 @@ const currentForecast = document.querySelector('#current-forecast');
 const toggle = document.querySelector('#toggle');
 const body = document.querySelector('body');
 const inp = document.querySelector('#text-inp');
-let tempUnit = 'metric';
 let windUnit = 'km/h';
 let tempSymbol = '° C';
 const daysOfTheWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
@@ -17,9 +16,11 @@ const dateToday = new Date().getDay();
 
 const toDay = daysOfTheWeek[dateToday];
 
-const emptySearchBox = (inp) => inp.value = '';
+const emptySearchBox = (inp) => {
+  inp.value = '';
+};
 
-const roundToTwo = (num) => +(Math.round(num + "e+2") + "e-2");
+const roundToTwo = (num) => +(`${Math.round(`${num}e+2`)}e-2`);
 
 const convertToF = (celsius) => roundToTwo(celsius * (9 / 5) + 32);
 
@@ -28,7 +29,6 @@ const convertToMph = (kmh) => roundToTwo(kmh / 1.609);
 const checkUnitBeforeLoad = () => {
   if (localStorage.getItem('unit') === 'imperial') {
     toggle.click();
-    tempUnit = 'imperial';
     windUnit = 'm/h';
     tempSymbol = '° F';
   }
@@ -207,7 +207,7 @@ const fetchWeatherData = async (cityLocation = localStorage.getItem('city')) => 
           feels_like: feels,
           humidity,
         },
-        dt_txt: dateText, wind: { speed },
+      dt_txt: dateText, wind: { speed },
       } = day;
       const weatherItemMetric = {
         weather: day.weather[0].main,
@@ -235,7 +235,6 @@ const fetchWeatherData = async (cityLocation = localStorage.getItem('city')) => 
         icon: day.weather[0].icon,
       };
 
-
       if (toggle.checked === true) {
         apiCall = [...apiCall, weatherItemImperial];
       } else {
@@ -244,7 +243,6 @@ const fetchWeatherData = async (cityLocation = localStorage.getItem('city')) => 
       const weatherForBg = apiCall[0].weather;
       weatherForYouUi(apiCall, cityName, countryName, weatherForBg);
     }
-
   } catch (e) {
     errorPrompt.classList.remove('none');
     spinner.classList.add('none');
@@ -253,12 +251,10 @@ const fetchWeatherData = async (cityLocation = localStorage.getItem('city')) => 
 
 const toggleUnits = () => {
   if (toggle.checked === true) {
-    tempUnit = 'imperial';
     windUnit = 'm/h';
     tempSymbol = '° F';
     localStorage.setItem('unit', 'imperial');
   } else {
-    tempUnit = 'metric';
     windUnit = 'km/h';
     tempSymbol = '° C';
     localStorage.setItem('unit', 'metric');
@@ -285,19 +281,6 @@ const fetchUserLocation = () => {
   navigator.geolocation.getCurrentPosition(successCallBack, errorCallBack);
 };
 
-const validateUserInp = event => {
-  event.preventDefault();
-  const typedLocation = inp.value;
-  const prevLocation = localStorage.getItem('city')
-  if (typedLocation.toLowerCase() === prevLocation.split(" ")[0].toLowerCase()) {
-    alert(`Already viewing ${typedLocation} data.`)
-  } else if (typedLocation.trim() === '') {
-    alert('Kindly enter a location in the search bar')
-  } else {
-    clickToSearchWeather(typedLocation)
-  }
-}
-
 const clickToSearchWeather = (typedLocation) => {
   emptySearchBox(inp);
   spinner.classList.remove('none');
@@ -305,6 +288,19 @@ const clickToSearchWeather = (typedLocation) => {
   localStorage.setItem('city', typedLocation);
   currentForecast.classList.add('none');
   fetchWeatherData(typedLocation);
+};
+
+const validateUserInp = event => {
+  event.preventDefault();
+  const typedLocation = inp.value;
+  const prevLocation = localStorage.getItem('city');
+  if (typedLocation.toLowerCase() === prevLocation.split(' ')[0].toLowerCase()) {
+    alert(`Already viewing ${typedLocation} data.`);
+  } else if (typedLocation.trim() === '') {
+    alert('Kindly enter a location in the search bar');
+  } else {
+    clickToSearchWeather(typedLocation);
+  }
 };
 
 const startApp = () => {
