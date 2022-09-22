@@ -17,11 +17,11 @@ const dateToday = new Date().getDay();
 
 const toDay = daysOfTheWeek[dateToday];
 
-const emptySearchBox = (inp) =>  inp.value = '';
+const emptySearchBox = (inp) => inp.value = '';
 
-const roundToTwo = (num) => +(Math.round(num + "e+2")  + "e-2");
+const roundToTwo = (num) => +(Math.round(num + "e+2") + "e-2");
 
-const convertToF = (celsius) => roundToTwo(celsius * (9/5) + 32);
+const convertToF = (celsius) => roundToTwo(celsius * (9 / 5) + 32);
 
 const convertToMph = (kmh) => roundToTwo(kmh / 1.609);
 
@@ -243,7 +243,6 @@ const fetchWeatherData = async (cityLocation = localStorage.getItem('city')) => 
       }
       const weatherForBg = apiCall[0].weather;
       weatherForYouUi(apiCall, cityName, countryName, weatherForBg);
-      console.log(weatherItemImperial)
     }
 
   } catch (e) {
@@ -286,19 +285,25 @@ const fetchUserLocation = () => {
   navigator.geolocation.getCurrentPosition(successCallBack, errorCallBack);
 };
 
+const validateUserInp = (typedLocation, prevLocation) => {
+  if (typedLocation.toLowerCase() === prevLocation.split(" ")[0].toLowerCase()) {
+    alert(`Already viewing ${typedLocation} data.`)
+  } else {
+    spinner.classList.remove('none');
+    appDisplay.classList.add('none');
+    localStorage.setItem('city', typedLocation);
+    currentForecast.classList.add('none');
+    fetchWeatherData(typedLocation);
+  }
+}
+
 const clickToSearchWeather = event => {
   event.preventDefault();
-  spinner.classList.remove('none');
-  appDisplay.classList.add('none');
   const cityToSearch = inp.value;
-  localStorage.setItem('city', cityToSearch);
-  currentForecast.classList.add('none');
-  fetchWeatherData(cityToSearch);
+  const savedLocation = localStorage.getItem('city')
+  validateUserInp(cityToSearch, savedLocation)
   emptySearchBox(inp);
 };
-
-
-
 
 const startApp = () => {
   checkUnitBeforeLoad();
