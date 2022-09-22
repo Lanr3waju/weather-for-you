@@ -285,31 +285,33 @@ const fetchUserLocation = () => {
   navigator.geolocation.getCurrentPosition(successCallBack, errorCallBack);
 };
 
-const validateUserInp = (typedLocation, prevLocation) => {
+const validateUserInp = event => {
+  event.preventDefault();
+  const typedLocation = inp.value;
+  const prevLocation = localStorage.getItem('city')
   if (typedLocation.toLowerCase() === prevLocation.split(" ")[0].toLowerCase()) {
     alert(`Already viewing ${typedLocation} data.`)
+  } else if (typedLocation.trim() === '') {
+    alert('Kindly enter a location in the search bar')
   } else {
-    spinner.classList.remove('none');
-    appDisplay.classList.add('none');
-    localStorage.setItem('city', typedLocation);
-    currentForecast.classList.add('none');
-    fetchWeatherData(typedLocation);
+    clickToSearchWeather(typedLocation)
   }
 }
 
-const clickToSearchWeather = event => {
-  event.preventDefault();
-  const cityToSearch = inp.value;
-  const savedLocation = localStorage.getItem('city')
-  validateUserInp(cityToSearch, savedLocation)
+const clickToSearchWeather = (typedLocation) => {
   emptySearchBox(inp);
+  spinner.classList.remove('none');
+  appDisplay.classList.add('none');
+  localStorage.setItem('city', typedLocation);
+  currentForecast.classList.add('none');
+  fetchWeatherData(typedLocation);
 };
 
 const startApp = () => {
   checkUnitBeforeLoad();
   spinner.classList.remove('none');
   fetchUserLocation();
-  search.addEventListener('submit', clickToSearchWeather);
+  search.addEventListener('submit', validateUserInp);
   closeError.addEventListener('click', () => { errorPrompt.classList.add('none'); });
   toggle.addEventListener('click', toggleUnits);
 };

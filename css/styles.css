@@ -369,4 +369,8 @@ input:checked + .slider::before {
   .current-weather {
     font-size: small;
   }
+
+  .search {
+    margin: 20px;
+  }
 }
