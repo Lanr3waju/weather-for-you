@@ -17,9 +17,13 @@ const dateToday = new Date().getDay();
 
 const toDay = daysOfTheWeek[dateToday];
 
-const emptySearchBox = (inp) => {
-  inp.value = '';
-};
+const emptySearchBox = (inp) =>  inp.value = '';
+
+const roundToTwo = (num) => +(Math.round(num + "e+2")  + "e-2");
+
+const convertToF = (celsius) => roundToTwo(celsius * (9/5) + 32);
+
+const convertToMph = (kmh) => roundToTwo(kmh / 1.609);
 
 const checkUnitBeforeLoad = () => {
   if (localStorage.getItem('unit') === 'imperial') {
@@ -182,7 +186,7 @@ const weatherForYouUi = (data, cityName, countryName, weatherForBg) => {
 const fetchWeatherData = async (cityLocation = localStorage.getItem('city')) => {
   try {
     const response = await fetch(
-      `https://api.openweathermap.org/data/2.5/forecast?q=${cityLocation}&APPID=194095d7d7f3bbd8e788854eb49fa87b&units=${tempUnit}`,
+      `https://api.openweathermap.org/data/2.5/forecast?q=${cityLocation}&APPID=194095d7d7f3bbd8e788854eb49fa87b&units=metric`,
       { mode: 'cors' },
     );
     const data = await response.json();
@@ -193,6 +197,7 @@ const fetchWeatherData = async (cityLocation = localStorage.getItem('city')) => 
     const { city: { country: countryName } } = data;
 
     let apiCall = [];
+
     for (let f = 0; f < forecast.length; f += 7) {
       const day = forecast[f];
       const { main:
@@ -202,9 +207,9 @@ const fetchWeatherData = async (cityLocation = localStorage.getItem('city')) => 
           feels_like: feels,
           humidity,
         },
-      dt_txt: dateText, wind: { speed },
+        dt_txt: dateText, wind: { speed },
       } = day;
-      const weatherItem = {
+      const weatherItemMetric = {
         weather: day.weather[0].main,
         weatherDesc: day.weather[0].description,
         mainTemp: temp,
@@ -216,11 +221,31 @@ const fetchWeatherData = async (cityLocation = localStorage.getItem('city')) => 
         windSpeed: speed,
         icon: day.weather[0].icon,
       };
-      apiCall = [...apiCall, weatherItem];
+
+      const weatherItemImperial = {
+        weather: day.weather[0].main,
+        weatherDesc: day.weather[0].description,
+        mainTemp: convertToF(temp),
+        maxTemp: convertToF(tempMax),
+        minTemp: convertToF(tempMin),
+        feelsLike: convertToF(feels),
+        date: dateText,
+        humid: humidity,
+        windSpeed: convertToMph(speed),
+        icon: day.weather[0].icon,
+      };
+
+
+      if (toggle.checked === true) {
+        apiCall = [...apiCall, weatherItemImperial];
+      } else {
+        apiCall = [...apiCall, weatherItemMetric];
+      }
+      const weatherForBg = apiCall[0].weather;
+      weatherForYouUi(apiCall, cityName, countryName, weatherForBg);
+      console.log(weatherItemImperial)
     }
 
-    const weatherForBg = apiCall[0].weather;
-    weatherForYouUi(apiCall, cityName, countryName, weatherForBg);
   } catch (e) {
     errorPrompt.classList.remove('none');
     spinner.classList.add('none');
@@ -271,6 +296,9 @@ const clickToSearchWeather = event => {
   fetchWeatherData(cityToSearch);
   emptySearchBox(inp);
 };
+
+
+
 
 const startApp = () => {
   checkUnitBeforeLoad();
