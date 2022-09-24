@@ -198,6 +198,7 @@ header {
 }
 
 .error-prompt {
+  z-index: 10;
   position: absolute;
   display: flex;
   width: 100%;
@@ -205,7 +206,6 @@ header {
   background-color: #000000f7;
   justify-content: center;
   align-items: center;
-  z-index: 50;
 }
 
 .error-msg {
@@ -218,6 +218,7 @@ header {
 
 .empty-input-container {
   transform: translateY(-100px);
+  z-index: 10;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -236,13 +237,19 @@ header {
 
 .empty-input-prompt > button {
   padding: 10px 30px;
-  border-radius: 30px;
+  border-radius: 20px;
   margin-left: 50px;
-  background-color: #040404;
   border: none;
-  color: #fff;
+  color: red;
+  background-color: white;
   font-size: 100%;
   cursor: pointer;
+  transition: all 200ms ease-in-out;
+}
+
+.empty-input-prompt > button:hover {
+  background-color: #d8d1d1;
+  transition: all 200ms ease-in-out;
 }
 
 .card-date {
@@ -398,6 +405,45 @@ input:checked + .slider::before {
   .current {
     max-width: 90%;
   }
+
+  .heading {
+    margin: 10px;
+  }
+
+  .empty-input-prompt {
+    padding: 20px 30px;
+    font-size: small;
+  }
+
+  .empty-input-prompt > button {
+    padding: 5px 15px;
+  }
+
+  .toggle {
+    position: relative;
+    display: flex;
+    margin: 0;
+    justify-content: center;
+    align-items: center;
+  }
+
+  @keyframes empty-input {
+    0% {
+      transform: translateY(-100px);
+    }
+
+    30% {
+      transform: translateY(140px);
+    }
+
+    70% {
+      transform: translateY(100px);
+    }
+
+    100% {
+      transform: translateY(120px);
+    }
+  }
 }
 
 @media screen and (max-width: 400px) {
@@ -433,23 +479,5 @@ input:checked + .slider::before {
   .empty-input-prompt > button {
     font-size: 70%;
     display: block;
-  }
-
-  .toggle {
-    position: relative;
-  }
-
-  @keyframes empty-input {
-    0% {
-      transform: translateY(-100px);
-    }
-
-    60% {
-      transform: translateY(400px);
-    }
-
-    100% {
-      transform: translateY(150px);
-    }
   }
 }
