@@ -140,17 +140,25 @@ header {
   font-size: 200%;
 }
 
-form {
+.text-box {
   display: flex;
   margin: 20px auto;
   justify-content: center;
   align-items: stretch;
 }
 
+.toggle {
+  margin-left: 100px;
+  position: absolute;
+}
+
 .input {
+  font-family: "Reem Kufi Fun", sans-serif;
+  font-size: large;
+  font-weight: 700;
   width: 60%;
-  border-radius: 10px 0 0 10px;
-  padding: 10px;
+  border-radius: 25px 0 0 25px;
+  padding: 20px;
   height: 15px;
   border: none;
 }
@@ -162,16 +170,16 @@ form {
 
 .input::placeholder {
   font-family: "Reem Kufi Fun", sans-serif;
+  font-weight: bold;
   word-spacing: 3px;
 }
 
 .search {
   border: none;
-  border-radius: 0 10px 10px 0;
-  padding: 5px;
+  border-radius: 0 25px 25px 0;
+  padding: 15px;
   background-color: #ffff;
   cursor: pointer;
-  margin-right: 50px;
 }
 
 .weather,
@@ -206,6 +214,35 @@ form {
   padding: 0;
   margin: 0;
   font-size: large;
+}
+
+.empty-input-container {
+  transform: translateY(-100px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: empty-input 500ms linear forwards;
+}
+
+.empty-input-prompt {
+  background-color: #0b0522;
+  border-radius: 20px;
+  padding: 20px 50px;
+  margin-top: 100px;
+  word-spacing: 6px;
+  font-size: 1.2rem;
+  position: absolute;
+}
+
+.empty-input-prompt > button {
+  padding: 10px 30px;
+  border-radius: 30px;
+  margin-left: 50px;
+  background-color: #040404;
+  border: none;
+  color: #fff;
+  font-size: 100%;
+  cursor: pointer;
 }
 
 .card-date {
@@ -261,8 +298,8 @@ form {
 .switch {
   position: relative;
   display: inline-block;
-  width: 54px;
-  height: 28px;
+  width: 58px;
+  height: 32px;
   cursor: pointer;
 }
 
@@ -284,13 +321,14 @@ form {
   bottom: 0;
   background-color: #ccc;
   transition: 0.4s;
+  word-spacing: 4px;
 }
 
 .slider::before {
   position: absolute;
   content: "";
-  height: 20px;
-  width: 20px;
+  height: 25px;
+  width: 25px;
   border-radius: 30%;
   left: 4px;
   bottom: 4px;
@@ -319,6 +357,24 @@ input:checked + .slider::before {
 
   100% {
     transform: rotate(360deg);
+  }
+}
+
+@keyframes empty-input {
+  0% {
+    transform: translateY(-100px);
+  }
+
+  30% {
+    transform: translateY(80px);
+  }
+
+  70% {
+    transform: translateY(60px);
+  }
+
+  100% {
+    transform: translateY(80px);
   }
 }
 
@@ -370,7 +426,34 @@ input:checked + .slider::before {
     font-size: small;
   }
 
-  .search {
-    margin: 20px;
+  .empty-input-prompt {
+    font-size: smaller;
+  }
+
+  .empty-input-prompt > button {
+    font-size: 70%;
+    display: block;
+  }
+
+  .toggle {
+    display: flex;
+    position: relative;
+    justify-content: center;
+    margin: 0;
+    align-items: center;
+  }
+
+  @keyframes empty-input {
+    0% {
+      transform: translateY(-100px);
+    }
+
+    60% {
+      transform: translateY(400px);
+    }
+
+    100% {
+      transform: translateY(150px);
+    }
   }
 }

@@ -17,15 +17,21 @@
         <button type="button" class="close" id="close">close</button>
       </div>
     </div>
+    <div class="empty-input-container none" id="empty-input-prompt">
+      <div class="empty-input-prompt"><span id="empty-input-message"></span><button type="button" id="close-empty-input">X</button></div>
+    </div>
     <header>
-      <form>
+      <form class="text-box">
         <input type="text" class="input" placeholder="Enter location to search" id="text-inp" />
         <button id="search" class="search" type="submit">
           <img src="./img/search-icon-png-9975.png" alt="search icon" class="search-icon" />
         </button>
+        </form>
+
+        <form class="toggle">
         <label class="switch">
-          <input id="toggle" type="checkbox" placeholder="toggle" />Toggle Units
-          <span class="slider">F</span>
+          <input id="toggle" type="checkbox" placeholder="toggle" />
+          <span class="slider">°F   °C</span>
         </label>
       </form>
       <h3 id="city" class="heading"></h3>

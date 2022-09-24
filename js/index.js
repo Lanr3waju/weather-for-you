@@ -8,6 +8,9 @@ const displayDate = document.querySelector('#days-date');
 const currentForecast = document.querySelector('#current-forecast');
 const toggle = document.querySelector('#toggle');
 const body = document.querySelector('body');
+const emptyInputMessage = document.querySelector('#empty-input-message');
+const closeEmptyPrompt = document.querySelector('#close-empty-input');
+const emptyInputPrompt = document.querySelector('#empty-input-prompt');
 const inp = document.querySelector('#text-inp');
 let windUnit = 'km/h';
 let tempSymbol = '° C';
@@ -293,12 +296,12 @@ const clickToSearchWeather = (typedLocation) => {
 const validateUserInp = event => {
   event.preventDefault();
   const typedLocation = inp.value;
-  const prevLocation = localStorage.getItem('city');
-  if (typedLocation.toLowerCase() === prevLocation.split(' ')[0].toLowerCase()) {
-    alert(`Already viewing ${typedLocation} data.`);
-  } else if (typedLocation.trim() === '') {
-    alert('Kindly enter a location in the search bar');
+  if (typedLocation.trim() === '') {
+    emptySearchBox(inp);
+    emptyInputMessage.textContent = 'Please enter a location in the search box!';
+    emptyInputPrompt.classList.remove('none');
   } else {
+    emptyInputPrompt.classList.add('none');
     clickToSearchWeather(typedLocation);
   }
 };
@@ -309,6 +312,7 @@ const startApp = () => {
   fetchUserLocation();
   search.addEventListener('submit', validateUserInp);
   closeError.addEventListener('click', () => { errorPrompt.classList.add('none'); });
+  closeEmptyPrompt.addEventListener('click', () => { emptyInputPrompt.classList.add('none'); });
   toggle.addEventListener('click', toggleUnits);
 };
 
