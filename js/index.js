@@ -249,18 +249,18 @@ const fetchWeatherData = async (cityLocation = 'Lagos') => {
       dataImperial = [...dataImperial, weatherItemImperial];
       uiCity = cityName;
       uiCountry = countryName;
-      weatherForBg = day.weather[0].main;
-
-      if (toggle.checked === true) {
-        weatherForYouUi(dataImperial, uiCity, uiCountry, weatherForBg);
-      } else {
-        weatherForYouUi(dataMetric, uiCity, uiCountry, weatherForBg);
-      }
-      document.querySelector('#toggle-form').classList.remove('none');
-      document.querySelector('#toggle-form').classList.add('toggle');
     }
+    weatherForBg = dataMetric[0].weather;
+    if (toggle.checked === true) {
+      weatherForYouUi(dataImperial, uiCity, uiCountry, weatherForBg);
+    } else {
+      weatherForYouUi(dataMetric, uiCity, uiCountry, weatherForBg);
+    }
+    document.querySelector('#toggle-form').classList.remove('none');
+    document.querySelector('#toggle-form').classList.add('toggle');
   } catch (e) {
-    errorPrompt.classList.remove('none');
+    errorPromptMessage('Location not found, try another location!');
+    emptyInputPrompt.classList.remove('none');
     spinner.classList.add('none');
   }
 };
@@ -327,6 +327,7 @@ const clickToSearchWeather = (typedLocation) => {
   appDisplay.classList.add('none');
   localStorage.setItem('city', typedLocation);
   currentForecast.classList.add('none');
+
   fetchWeatherData(typedLocation);
 };
 

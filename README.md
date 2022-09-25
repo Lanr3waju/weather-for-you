@@ -82,7 +82,7 @@ npm run html-validator
 
 Contributions, issues and feature requests are welcome!
 
-Feel free to check the [issues page](../../issues).
+Feel free to check the [issues page](https://github.com/Lanr3waju/weather-for-you/issues/4#issue-1384916250).
 
 ## Show your support
 
