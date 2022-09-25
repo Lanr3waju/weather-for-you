@@ -385,7 +385,7 @@ input:checked + .slider::before {
   }
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 700px) {
   .weather {
     font-size: 14px;
   }
@@ -417,6 +417,7 @@ input:checked + .slider::before {
 
   .empty-input-prompt > button {
     padding: 5px 15px;
+    margin-left: 10px;
   }
 
   .toggle {
@@ -474,10 +475,14 @@ input:checked + .slider::before {
 
   .empty-input-prompt {
     font-size: smaller;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
   }
 
   .empty-input-prompt > button {
     font-size: 70%;
-    display: block;
+    margin-top: 20px;
   }
 }

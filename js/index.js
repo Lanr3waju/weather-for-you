@@ -14,6 +14,11 @@ const emptyInputPrompt = document.querySelector('#empty-input-prompt');
 const inp = document.querySelector('#text-inp');
 let windUnit = 'km/h';
 let tempSymbol = '° C';
+let dataMetric = [];
+let dataImperial = [];
+let uiCity;
+let uiCountry;
+let weatherForBg;
 const daysOfTheWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 const dateToday = new Date().getDay();
 
@@ -21,6 +26,10 @@ const toDay = daysOfTheWeek[dateToday];
 
 const emptySearchBox = (inp) => {
   inp.value = '';
+};
+
+const errorPromptMessage = message => {
+  emptyInputMessage.textContent = message;
 };
 
 const roundToTwo = (num) => +(`${Math.round(`${num}e+2`)}e-2`);
@@ -186,7 +195,7 @@ const weatherForYouUi = (data, cityName, countryName, weatherForBg) => {
   }
 };
 
-const fetchWeatherData = async (cityLocation = localStorage.getItem('city')) => {
+const fetchWeatherData = async (cityLocation = 'Lagos') => {
   try {
     const response = await fetch(
       `https://api.openweathermap.org/data/2.5/forecast?q=${cityLocation}&APPID=194095d7d7f3bbd8e788854eb49fa87b&units=metric`,
@@ -198,8 +207,6 @@ const fetchWeatherData = async (cityLocation = localStorage.getItem('city')) => 
 
     const { city: { name: cityName } } = data;
     const { city: { country: countryName } } = data;
-
-    let apiCall = [];
 
     for (let f = 0; f < forecast.length; f += 7) {
       const day = forecast[f];
@@ -238,13 +245,19 @@ const fetchWeatherData = async (cityLocation = localStorage.getItem('city')) => 
         icon: day.weather[0].icon,
       };
 
+      dataMetric = [...dataMetric, weatherItemMetric];
+      dataImperial = [...dataImperial, weatherItemImperial];
+      uiCity = cityName;
+      uiCountry = countryName;
+      weatherForBg = day.weather[0].main;
+
       if (toggle.checked === true) {
-        apiCall = [...apiCall, weatherItemImperial];
+        weatherForYouUi(dataImperial, uiCity, uiCountry, weatherForBg);
       } else {
-        apiCall = [...apiCall, weatherItemMetric];
+        weatherForYouUi(dataMetric, uiCity, uiCountry, weatherForBg);
       }
-      const weatherForBg = apiCall[0].weather;
-      weatherForYouUi(apiCall, cityName, countryName, weatherForBg);
+      document.querySelector('#toggle-form').classList.remove('none');
+      document.querySelector('#toggle-form').classList.add('toggle');
     }
   } catch (e) {
     errorPrompt.classList.remove('none');
@@ -257,12 +270,13 @@ const toggleUnits = () => {
     windUnit = 'm/h';
     tempSymbol = '° F';
     localStorage.setItem('unit', 'imperial');
+    weatherForYouUi(dataImperial, uiCity, uiCountry, weatherForBg);
   } else {
     windUnit = 'km/h';
     tempSymbol = '° C';
     localStorage.setItem('unit', 'metric');
+    weatherForYouUi(dataMetric, uiCity, uiCountry, weatherForBg);
   }
-  fetchWeatherData();
 };
 
 const successCallBack = async position => {
@@ -271,13 +285,36 @@ const successCallBack = async position => {
     https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=638bda15a7104f78984174b3cfba1ef1`);
   const data = await response.json();
   const location = data.results[0].components.state;
-  localStorage.setItem('city', location);
   fetchWeatherData(location);
 };
 
-const errorCallBack = () => {
-  errorPrompt.classList.remove('none');
+const errorCallBack = ({ code }) => {
   spinner.classList.add('none');
+
+  // Display error based on the error code.
+  switch (code) {
+    case 3:
+      errorPromptMessage('Timeout Please try again!');
+      emptyInputPrompt.classList.remove('none');
+      // Handle timeout.
+      break;
+
+    case 2:
+      errorPromptMessage('Location unavailable, enter location in search box!');
+      emptyInputPrompt.classList.remove('none');
+      // User denied the request.
+      break;
+
+    case 1:
+      errorPromptMessage('Location access denied, enter location in search box');
+      emptyInputPrompt.classList.remove('none');
+      // Location Unavailable.
+      break;
+
+    default:
+      // No default case
+      break;
+  }
 };
 
 const fetchUserLocation = () => {
@@ -298,7 +335,7 @@ const validateUserInp = event => {
   const typedLocation = inp.value;
   if (typedLocation.trim() === '') {
     emptySearchBox(inp);
-    emptyInputMessage.textContent = 'Please enter a location in the search box!';
+    errorPromptMessage('Please enter a location in the search box!');
     emptyInputPrompt.classList.remove('none');
   } else {
     emptyInputPrompt.classList.add('none');
