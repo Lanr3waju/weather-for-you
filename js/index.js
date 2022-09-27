@@ -48,7 +48,7 @@ const checkUnitBeforeLoad = () => {
 
 const weatherForYouUi = (data, cityName, countryName, weatherForBg) => {
   city.textContent = `${cityName}, ${countryName}`;
-  displayDate.textContent = `${toDay},   ${data[0].date}`;
+  displayDate.textContent = toDay;
 
   appDisplay.innerHTML = '';
 
