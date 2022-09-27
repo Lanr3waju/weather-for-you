@@ -14,8 +14,8 @@ const emptyInputPrompt = document.querySelector('#empty-input-prompt');
 const inp = document.querySelector('#text-inp');
 let windUnit = 'km/h';
 let tempSymbol = '° C';
-let dataMetric = [];
-let dataImperial = [];
+let dataMetric;
+let dataImperial;
 let uiCity;
 let uiCountry;
 let weatherForBg;
@@ -62,7 +62,8 @@ const weatherForYouUi = (data, cityName, countryName, weatherForBg) => {
 
     const dateEl = document.createElement('li');
     dateEl.className = 'card-date';
-    dateEl.textContent = date;
+    const forecastDay = daysOfTheWeek[new Date(date).getDay()];
+    dateEl.textContent = forecastDay;
 
     const weatherDescEl = document.createElement('li');
     weatherDescEl.className = 'weather-description';
@@ -71,13 +72,13 @@ const weatherForYouUi = (data, cityName, countryName, weatherForBg) => {
     const mainTempEl = document.createElement('li');
     mainTempEl.className = 'temp';
     const mainTempVal = document.createElement('p');
-    mainTempVal.textContent = `Main-Temperature (Feels-Like): ${mainTemp} ${tempSymbol} - ${feelsLike} ${tempSymbol}`;
+    mainTempVal.textContent = `Main-Temp (Feels-Like): ${mainTemp} ${tempSymbol} - ${feelsLike} ${tempSymbol}`;
     mainTempEl.append(mainTempVal);
 
     const maxMinTempEl = document.createElement('li');
     maxMinTempEl.className = 'temp';
     const maxMinTempVal = document.createElement('p');
-    maxMinTempVal.textContent = `Max-Min Temperature: ${maxTemp} ${tempSymbol} - ${minTemp} ${tempSymbol}`;
+    maxMinTempVal.textContent = `Max-Min Temp: ${maxTemp} ${tempSymbol} - ${minTemp} ${tempSymbol}`;
     maxMinTempEl.append(maxMinTempVal);
 
     const ico = document.createElement('img');
@@ -139,7 +140,7 @@ const weatherForYouUi = (data, cityName, countryName, weatherForBg) => {
   const maxMinTemp = document.createElement('li');
   maxMinTemp.className = 'current-max-min';
   const maxMinTempVal = document.createElement('p');
-  maxMinTempVal.textContent = `Max-Min Temperature: ${data[0].maxTemp} ${tempSymbol} - ${data[0].minTemp} ${tempSymbol} `;
+  maxMinTempVal.textContent = `Max-Min Temp: ${data[0].maxTemp} ${tempSymbol} - ${data[0].minTemp} ${tempSymbol} `;
   maxMinTemp.append(maxMinTempVal);
 
   const ico = document.createElement('img');
@@ -194,7 +195,6 @@ const weatherForYouUi = (data, cityName, countryName, weatherForBg) => {
       ico.src = ('../img/animated/weather.svg');
   }
 };
-
 const fetchWeatherData = async (cityLocation = 'Lagos') => {
   try {
     const response = await fetch(
@@ -202,11 +202,17 @@ const fetchWeatherData = async (cityLocation = 'Lagos') => {
       { mode: 'cors' },
     );
     const data = await response.json();
+    if (data.cod !== '200') {
+      const errorMessage = `${data.cod}, ${data.message}`;
+      throw new Error(errorMessage);
+    }
     let { list: forecast } = data;
     forecast = [...forecast.slice(0, 28)];
 
     const { city: { name: cityName } } = data;
     const { city: { country: countryName } } = data;
+    dataMetric = [];
+    dataImperial = [];
 
     for (let f = 0; f < forecast.length; f += 7) {
       const day = forecast[f];
@@ -247,11 +253,12 @@ const fetchWeatherData = async (cityLocation = 'Lagos') => {
 
       dataMetric = [...dataMetric, weatherItemMetric];
       dataImperial = [...dataImperial, weatherItemImperial];
+
       uiCity = cityName;
       uiCountry = countryName;
     }
     weatherForBg = dataMetric[0].weather;
-    if (toggle.checked === true) {
+    if (toggle.checked) {
       weatherForYouUi(dataImperial, uiCity, uiCountry, weatherForBg);
     } else {
       weatherForYouUi(dataMetric, uiCity, uiCountry, weatherForBg);
@@ -259,14 +266,14 @@ const fetchWeatherData = async (cityLocation = 'Lagos') => {
     document.querySelector('#toggle-form').classList.remove('none');
     document.querySelector('#toggle-form').classList.add('toggle');
   } catch (e) {
-    errorPromptMessage('Location not found, try another location!');
+    errorPromptMessage(e.message);
     emptyInputPrompt.classList.remove('none');
     spinner.classList.add('none');
   }
 };
 
 const toggleUnits = () => {
-  if (toggle.checked === true) {
+  if (toggle.checked) {
     windUnit = 'm/h';
     tempSymbol = '° F';
     localStorage.setItem('unit', 'imperial');

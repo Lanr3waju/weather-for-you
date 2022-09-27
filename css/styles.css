@@ -83,20 +83,18 @@ header {
 .current {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-around;
   background: linear-gradient(135deg, #220c7265, #250a5863);
   border-radius: 10px;
   color: #ffff;
-  min-width: 40%;
   flex-wrap: wrap;
   box-shadow: #32325d40 0 20px 40px -20px, #cfa2a24d 0 15px 30px -30px, #79899a59 0 -2px 6px 0 inset;
   padding: 8px;
   margin: 10px;
 }
 
-.weather-forecast:nth-child(1),
-.weather-forecast:nth-child(4) {
-  min-width: 48%;
+.weather-forecast {
+  width: 45%;
 }
 
 .current {
