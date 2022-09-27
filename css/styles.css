@@ -236,7 +236,7 @@ header {
 .empty-input-prompt > button {
   padding: 10px 30px;
   border-radius: 20px;
-  margin-left: 50px;
+  margin-left: 40px;
   border: none;
   color: red;
   background-color: white;
@@ -383,7 +383,7 @@ input:checked + .slider::before {
   }
 }
 
-@media screen and (max-width: 700px) {
+@media screen and (max-width: 600px) {
   .weather {
     font-size: 14px;
   }
@@ -401,6 +401,7 @@ input:checked + .slider::before {
   }
 
   .current {
+    margin-top: 50px;
     max-width: 90%;
   }
 
@@ -410,18 +411,21 @@ input:checked + .slider::before {
 
   .empty-input-prompt {
     padding: 20px 30px;
+    width: 80%;
+    text-align: center;
     font-size: small;
   }
 
   .empty-input-prompt > button {
     padding: 5px 15px;
-    margin-left: 10px;
+    display: block;
+    margin: 10px auto;
   }
 
   .toggle {
     position: relative;
     display: flex;
-    margin: 0;
+    margin: -5px 0 0;
     justify-content: center;
     align-items: center;
   }
@@ -432,15 +436,15 @@ input:checked + .slider::before {
     }
 
     30% {
-      transform: translateY(140px);
+      transform: translateY(170px);
     }
 
     70% {
-      transform: translateY(100px);
+      transform: translateY(120px);
     }
 
     100% {
-      transform: translateY(120px);
+      transform: translateY(150px);
     }
   }
 }
@@ -469,18 +473,5 @@ input:checked + .slider::before {
 
   .current-weather {
     font-size: small;
-  }
-
-  .empty-input-prompt {
-    font-size: smaller;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-  }
-
-  .empty-input-prompt > button {
-    font-size: 70%;
-    margin-top: 20px;
   }
 }
