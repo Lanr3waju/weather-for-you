@@ -12,6 +12,10 @@ const emptyInputMessage = document.querySelector('#empty-input-message');
 const closeEmptyPrompt = document.querySelector('#close-empty-input');
 const emptyInputPrompt = document.querySelector('#empty-input-prompt');
 const inp = document.querySelector('#text-inp');
+const openweatherUrl = 'https://api.openweathermap.org/data/2.5/forecast?';
+const openweatherId = '194095d7d7f3bbd8e788854eb49fa87b';
+const opencageUrl = 'https://api.opencagedata.com/geocode/v1/json?';
+const opencageId = '638bda15a7104f78984174b3cfba1ef1';
 let windUnit = 'km/h';
 let tempSymbol = '° C';
 let dataMetric;
@@ -187,7 +191,7 @@ const weatherForYouUi = (data, cityName, countryName, weatherForBg) => {
 const fetchWeatherData = async (cityLocation = 'Lagos') => {
   try {
     const response = await fetch(
-      `https://api.openweathermap.org/data/2.5/forecast?q=${cityLocation}&APPID=194095d7d7f3bbd8e788854eb49fa87b&units=metric`,
+      `${openweatherUrl}q=${cityLocation}&APPID=${openweatherId}&units=metric`,
       { mode: 'cors' },
     );
     const data = await response.json();
@@ -277,8 +281,9 @@ const toggleUnits = () => {
 
 const successCallBack = async position => {
   const { latitude, longitude } = position.coords;
-  const response = await fetch(`
-    https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=638bda15a7104f78984174b3cfba1ef1`);
+  const response = await fetch(
+    `${opencageUrl}q=${latitude}+${longitude}&key=${opencageId}`,
+  );
   const data = await response.json();
   const location = data.results[0].components.state;
   fetchWeatherData(location);
@@ -298,13 +303,13 @@ const errorCallBack = ({ code }) => {
     case 2:
       errorPromptMessage('Location unavailable, enter location in search box!');
       emptyInputPrompt.classList.remove('none');
-      // User denied the request.
+      // Location Unavailable.
       break;
 
     case 1:
       errorPromptMessage('Location access denied, enter location in search box');
       emptyInputPrompt.classList.remove('none');
-      // Location Unavailable.
+      // User denied the request.
       break;
 
     default:
