@@ -98,27 +98,6 @@ const weatherForYouUi = (data, cityName, countryName, weatherForBg) => {
     appDisplay.classList.remove('none');
   });
 
-  switch (weatherForBg) {
-    case 'Rain':
-      body.classList.add('rainy');
-      body.classList.remove('cloudy', 'sunny', 'snowy');
-      break;
-    case 'Clouds':
-      body.classList.add('cloudy');
-      body.classList.remove('rainy', 'sunny', 'snowy');
-      break;
-    case 'Clear':
-      body.classList.add('sunny');
-      body.classList.remove('cloudy', 'rainy', 'snowy');
-      break;
-    case 'Snow':
-      body.classList.add('snowy');
-      body.classList.remove('cloudy', 'sunny', 'snowy');
-      break;
-    default:
-      body.classList.remove('cloudy', 'sunny', 'rainy', 'snowy');
-  }
-
   currentForecast.innerHTML = '';
 
   const weatherForecast = document.createElement('div');
@@ -174,27 +153,37 @@ const weatherForYouUi = (data, cityName, countryName, weatherForBg) => {
 
   switch (weatherForBg) {
     case 'Rain':
+      body.classList.add('rainy');
+      body.classList.remove('cloudy', 'sunny', 'snowy');
       ico.src = ('../img/animated/rainy-5.svg');
       break;
     case 'Drizzle':
       ico.src = ('../img/animated/rainy-2.svg');
       break;
     case 'Clouds':
+      body.classList.add('cloudy');
+      body.classList.remove('rainy', 'sunny', 'snowy');
       ico.src = ('../img/animated/cloudy.svg');
       break;
     case 'Clear':
+      body.classList.add('sunny');
+      body.classList.remove('cloudy', 'rainy', 'snowy');
       ico.src = ('../img/animated/day.svg');
       break;
     case 'Snow':
+      body.classList.add('snowy');
+      body.classList.remove('cloudy', 'sunny', 'snowy');
       ico.src = ('../img/animated/snowy-6.svg');
       break;
     case 'Thunderstorm':
       ico.src = ('../img/animated/thunder.svg');
       break;
     default:
+      body.classList.remove('cloudy', 'sunny', 'rainy', 'snowy');
       ico.src = ('../img/animated/weather.svg');
   }
 };
+
 const fetchWeatherData = async (cityLocation = 'Lagos') => {
   try {
     const response = await fetch(
