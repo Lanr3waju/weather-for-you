@@ -1,7 +1,5 @@
 const search = document.querySelector('form');
 const spinner = document.querySelector('#spinner');
-const errorPrompt = document.querySelector('#error-prompt');
-const closeError = document.querySelector('#close');
 const appDisplay = document.querySelector('#weather-data');
 const city = document.querySelector('#city');
 const displayDate = document.querySelector('#days-date');
@@ -50,14 +48,79 @@ const checkUnitBeforeLoad = () => {
   }
 };
 
-const weatherForYouUi = (data, cityName, countryName, weatherForBg) => {
-  city.textContent = `${cityName}, ${countryName}`;
-  displayDate.textContent = toDay;
+const handleToggleUnits = () => {
+  let data;
+  if (localStorage.getItem('unit') === 'imperial') {
+    data = dataImperial;
+  } else {
+    data = dataMetric;
+  }
+  if (document.querySelector('.weather-forecast')) {
+    const mainTemp = (index) => data[index].mainTemp;
+    const feelsLike = (index) => data[index].feelsLike;
+    const maxTemp = (index) => data[index].maxTemp;
+    const minTemp = (index) => data[index].minTemp;
+    const mainFeelsTemp = document.getElementsByClassName('main-feels');
+    const minMaxTemp = document.getElementsByClassName('max-min');
 
-  appDisplay.innerHTML = '';
+    // Update textContent for current weather
+    document.querySelector('.current-temp').textContent = `${data[0].mainTemp} ${tempSymbol}`;
+    document.querySelector('.current-feels-like').textContent = `Feels Like ${data[0].feelsLike} ${tempSymbol}`;
+    document.querySelector('.current-max-min').textContent = `Max-Min Temp: ${data[0].maxTemp} ${tempSymbol} - ${data[0].minTemp} ${tempSymbol} `;
+    document.querySelector('.wind-speed').textContent = `Wind Speed: ${data[0].windSpeed} ${windUnit}`;
 
-  data.forEach(item => {
-    const { maxTemp, mainTemp, minTemp, feelsLike, date, weatherDesc } = item;
+    // Update textContent for future weather (Main temperature and Feels-like)
+    mainFeelsTemp[0].textContent = `Main-Temp (Feels-Like): ${mainTemp(0)} ${tempSymbol} - ${feelsLike(0)} ${tempSymbol}`;
+    mainFeelsTemp[1].textContent = `Main-Temp (Feels-Like): ${mainTemp(1)} ${tempSymbol} - ${feelsLike(1)} ${tempSymbol}`;
+    mainFeelsTemp[2].textContent = `Main-Temp (Feels-Like): ${mainTemp(2)} ${tempSymbol} - ${feelsLike(2)} ${tempSymbol}`;
+    mainFeelsTemp[3].textContent = `Main-Temp (Feels-Like): ${mainTemp(3)} ${tempSymbol} - ${feelsLike(3)} ${tempSymbol}`;
+
+    // Update textContent for future weather (Max temperature and Minimum Temperature)
+    minMaxTemp[0].textContent = `Max-Min Temp: ${maxTemp(0)} ${tempSymbol} - ${minTemp(0)} ${tempSymbol}`;
+    minMaxTemp[1].textContent = `Max-Min Temp: ${maxTemp(1)} ${tempSymbol} - ${minTemp(1)} ${tempSymbol}`;
+    minMaxTemp[2].textContent = `Max-Min Temp: ${maxTemp(2)} ${tempSymbol} - ${minTemp(2)} ${tempSymbol}`;
+    minMaxTemp[3].textContent = `Max-Min Temp: ${maxTemp(3)} ${tempSymbol} - ${minTemp(3)} ${tempSymbol}`;
+  }
+  return data;
+};
+
+const handleWeatherBackground = (weather, icon) => {
+  switch (weather) {
+    case 'Rain':
+      body.classList.add('rainy');
+      body.classList.remove('cloudy', 'sunny', 'snowy');
+      icon.src = ('../img/animated/rainy-5.svg');
+      break;
+    case 'Drizzle':
+      icon.src = ('../img/animated/rainy-2.svg');
+      break;
+    case 'Clouds':
+      body.classList.add('cloudy');
+      body.classList.remove('rainy', 'sunny', 'snowy');
+      icon.src = ('../img/animated/cloudy.svg');
+      break;
+    case 'Clear':
+      body.classList.add('sunny');
+      body.classList.remove('cloudy', 'rainy', 'snowy');
+      icon.src = ('../img/animated/day.svg');
+      break;
+    case 'Snow':
+      body.classList.add('snowy');
+      body.classList.remove('cloudy', 'sunny', 'snowy');
+      icon.src = ('../img/animated/snowy-6.svg');
+      break;
+    case 'Thunderstorm':
+      icon.src = ('../img/animated/thunder.svg');
+      break;
+    default:
+      body.classList.remove('cloudy', 'sunny', 'rainy', 'snowy');
+      icon.src = ('../img/animated/weather.svg');
+  }
+};
+
+const createCardsForFutureForecast = apiData => {
+  apiData.forEach(item => {
+    const { date, weatherDesc } = item;
     const weatherForecast = document.createElement('div');
     weatherForecast.className = 'weather-forecast';
 
@@ -74,16 +137,10 @@ const weatherForYouUi = (data, cityName, countryName, weatherForBg) => {
     weatherDescEl.textContent = weatherDesc;
 
     const mainTempEl = document.createElement('li');
-    mainTempEl.className = 'temp';
-    const mainTempVal = document.createElement('p');
-    mainTempVal.textContent = `Main-Temp (Feels-Like): ${mainTemp} ${tempSymbol} - ${feelsLike} ${tempSymbol}`;
-    mainTempEl.append(mainTempVal);
+    mainTempEl.className = 'temp main-feels';
 
     const maxMinTempEl = document.createElement('li');
-    maxMinTempEl.className = 'temp';
-    const maxMinTempVal = document.createElement('p');
-    maxMinTempVal.textContent = `Max-Min Temp: ${maxTemp} ${tempSymbol} - ${minTemp} ${tempSymbol}`;
-    maxMinTempEl.append(maxMinTempVal);
+    maxMinTempEl.className = 'temp max-min';
 
     const ico = document.createElement('img');
     ico.src = (`http://openweathermap.org/img/wn/${item.icon}@2x.png`);
@@ -101,9 +158,9 @@ const weatherForYouUi = (data, cityName, countryName, weatherForBg) => {
     spinner.classList.add('none');
     appDisplay.classList.remove('none');
   });
+};
 
-  currentForecast.innerHTML = '';
-
+const createCardForCurrentForecast = apiData => {
   const weatherForecast = document.createElement('div');
   weatherForecast.className = 'current';
 
@@ -112,19 +169,12 @@ const weatherForYouUi = (data, cityName, countryName, weatherForBg) => {
 
   const mainTemp = document.createElement('li');
   mainTemp.className = 'current-temp';
-  mainTemp.textContent = `${data[0].mainTemp} ${tempSymbol}`;
 
   const feelsLike = document.createElement('li');
   feelsLike.className = 'current-feels-like';
-  const feelsLikeVal = document.createElement('p');
-  feelsLikeVal.textContent = `Feels Like ${data[0].feelsLike} ${tempSymbol}`;
-  feelsLike.append(feelsLikeVal);
 
   const maxMinTemp = document.createElement('li');
   maxMinTemp.className = 'current-max-min';
-  const maxMinTempVal = document.createElement('p');
-  maxMinTempVal.textContent = `Max-Min Temp: ${data[0].maxTemp} ${tempSymbol} - ${data[0].minTemp} ${tempSymbol} `;
-  maxMinTemp.append(maxMinTempVal);
 
   const ico = document.createElement('img');
   ico.className = 'current-icon';
@@ -133,20 +183,15 @@ const weatherForYouUi = (data, cityName, countryName, weatherForBg) => {
 
   const weatherDesc = document.createElement('li');
   weatherDesc.className = 'current-weather-desc';
-  weatherDesc.textContent = data[0].weatherDesc;
+  weatherDesc.textContent = apiData[0].weatherDesc;
 
   weatherUl.className = 'current-weather';
   const humidity = document.createElement('li');
   humidity.className = 'humidity';
-  const humidityVal = document.createElement('p');
-  humidityVal.textContent = `Humidity: ${data[0].humid}%`;
-  humidity.append(humidityVal);
+  humidity.textContent = `Humidity: ${apiData[0].humid}%`;
 
   const windSpeed = document.createElement('li');
   windSpeed.className = 'wind-speed';
-  const windSpeedVal = document.createElement('p');
-  windSpeedVal.textContent = `Wind Speed: ${data[0].windSpeed} ${windUnit}`;
-  windSpeed.append(windSpeedVal);
 
   weatherTempData.append(mainTemp, feelsLike, maxMinTemp);
   weatherUl.append(weatherDesc, humidity, windSpeed);
@@ -154,38 +199,20 @@ const weatherForYouUi = (data, cityName, countryName, weatherForBg) => {
 
   currentForecast.classList.remove('none');
   currentForecast.append(weatherForecast);
+  handleWeatherBackground(weatherForBg, ico);
+};
 
-  switch (weatherForBg) {
-    case 'Rain':
-      body.classList.add('rainy');
-      body.classList.remove('cloudy', 'sunny', 'snowy');
-      ico.src = ('../img/animated/rainy-5.svg');
-      break;
-    case 'Drizzle':
-      ico.src = ('../img/animated/rainy-2.svg');
-      break;
-    case 'Clouds':
-      body.classList.add('cloudy');
-      body.classList.remove('rainy', 'sunny', 'snowy');
-      ico.src = ('../img/animated/cloudy.svg');
-      break;
-    case 'Clear':
-      body.classList.add('sunny');
-      body.classList.remove('cloudy', 'rainy', 'snowy');
-      ico.src = ('../img/animated/day.svg');
-      break;
-    case 'Snow':
-      body.classList.add('snowy');
-      body.classList.remove('cloudy', 'sunny', 'snowy');
-      ico.src = ('../img/animated/snowy-6.svg');
-      break;
-    case 'Thunderstorm':
-      ico.src = ('../img/animated/thunder.svg');
-      break;
-    default:
-      body.classList.remove('cloudy', 'sunny', 'rainy', 'snowy');
-      ico.src = ('../img/animated/weather.svg');
-  }
+const renderWeatherData = () => {
+  city.textContent = `${uiCity}, ${uiCountry}`;
+  displayDate.textContent = toDay;
+  const data = handleToggleUnits();
+  appDisplay.innerHTML = '';
+  createCardsForFutureForecast(data);
+  currentForecast.innerHTML = '';
+  createCardForCurrentForecast(data);
+  document.querySelector('#toggle-form').classList.remove('none');
+  document.querySelector('#toggle-form').classList.add('toggle');
+  handleToggleUnits();
 };
 
 const fetchWeatherData = async (cityLocation = 'Lagos') => {
@@ -251,13 +278,7 @@ const fetchWeatherData = async (cityLocation = 'Lagos') => {
       uiCountry = countryName;
     }
     weatherForBg = dataMetric[0].weather;
-    if (toggle.checked) {
-      weatherForYouUi(dataImperial, uiCity, uiCountry, weatherForBg);
-    } else {
-      weatherForYouUi(dataMetric, uiCity, uiCountry, weatherForBg);
-    }
-    document.querySelector('#toggle-form').classList.remove('none');
-    document.querySelector('#toggle-form').classList.add('toggle');
+    renderWeatherData();
   } catch (e) {
     errorPromptMessage(e.message);
     emptyInputPrompt.classList.remove('none');
@@ -270,13 +291,12 @@ const toggleUnits = () => {
     windUnit = 'm/h';
     tempSymbol = '° F';
     localStorage.setItem('unit', 'imperial');
-    weatherForYouUi(dataImperial, uiCity, uiCountry, weatherForBg);
   } else {
     windUnit = 'km/h';
     tempSymbol = '° C';
     localStorage.setItem('unit', 'metric');
-    weatherForYouUi(dataMetric, uiCity, uiCountry, weatherForBg);
   }
+  handleToggleUnits();
 };
 
 const successCallBack = async position => {
@@ -328,7 +348,6 @@ const clickToSearchWeather = (typedLocation) => {
   appDisplay.classList.add('none');
   localStorage.setItem('city', typedLocation);
   currentForecast.classList.add('none');
-
   fetchWeatherData(typedLocation);
 };
 
@@ -350,7 +369,6 @@ const startApp = () => {
   spinner.classList.remove('none');
   fetchUserLocation();
   search.addEventListener('submit', validateUserInp);
-  closeError.addEventListener('click', () => { errorPrompt.classList.add('none'); });
   closeEmptyPrompt.addEventListener('click', () => { emptyInputPrompt.classList.add('none'); });
   toggle.addEventListener('click', toggleUnits);
 };
