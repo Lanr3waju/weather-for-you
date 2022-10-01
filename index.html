@@ -11,29 +11,33 @@
     <link rel="manifest" href="./site.webmanifest" />
   </head>
   <body>
-    <div id="error-prompt" class="error-prompt none">
-      <div id="error-msg" class="error-msg">
-        Oops! We Ran into an error, Please Enter the Location Again!
-        <button type="button" class="close" id="close">close</button>
+    <div class="empty-input-container none" id="empty-input-prompt">
+      <div class="empty-input-prompt">
+        <span id="empty-input-message"></span
+        ><button type="button" id="close-empty-input">X</button>
       </div>
     </div>
     <header>
-      <form>
+      <form class="text-box">
         <input type="text" class="input" placeholder="Enter location to search" id="text-inp" />
         <button id="search" class="search" type="submit">
-          <img src="./img/icons/favicon-32x32.png" alt="search icon" />
+          <img src="./img/search-icon-png-9975.png" alt="search icon" class="search-icon" />
         </button>
       </form>
+
+      <form id="toggle-form" class="none">
+        <label class="switch">
+          <input id="toggle" type="checkbox" />
+          <span class="slider">°F °C</span>
+        </label>
+      </form>
+      <h3 id="city" class="heading"></h3>
+      <p id="days-date" class="heading"></p>
+      <div class="current-forecast" id="current-forecast"></div>
     </header>
 
     <main>
-      <section>
-        <h2 class="weather-4-u">Weather For You by Lanr3waju</h2>
-        <p id="city" class="city"></p>
-        <p id="days-date" class="days-date"></p>
-        <div class="current-forecast" id="current-forecast"></div>
-        <div class="weather-data none" id="weather-data"></div>
-      </section>
+      <div class="weather-data none" id="weather-data"></div>
     </main>
     <div class="lds-dual-ring" id="spinner"></div>
     <script defer src="./js/index.js"></script>

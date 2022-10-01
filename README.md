@@ -4,7 +4,11 @@
 
 ![screenshot](./img/preview.PNG)
 
-Additional description about the project and its features.
+## The weather app displays weather data for the location entered in the search bar or by obtaining the location of the deviceif user allows location access
+
+- The units of the weather data are in metric by default, but can be switched to imperial based on user's preference with a toggle button provided.
+- The preferred unit of the user is saved so the user won't have to select it again on reload.
+- The user input is screened to prevent useless HTTP requests.
 
 ## Built With
 
@@ -78,7 +82,7 @@ npm run html-validator
 
 Contributions, issues and feature requests are welcome!
 
-Feel free to check the [issues page](../../issues).
+Feel free to check the [issues page](https://github.com/Lanr3waju/weather-for-you/issues/4#issue-1384916250).
 
 ## Show your support
 
@@ -88,7 +92,7 @@ Give a ⭐️ if you like this project!
 
 - [openWeatherMap](https://openweathermap.org/)
 - [openCage Geocoding Api](https://opencagedata.com/api)
-- [Bgjar SVG ](https://bgjar.com/)
+- [Bgjar SVG](https://bgjar.com/)
 - [amCharts Weather Icons](https://www.amcharts.com/)
 - [SVG Backgrounds](https://www.svgbackgrounds.com/)
 
