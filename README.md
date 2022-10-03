@@ -16,6 +16,26 @@
 - OpenWeatherMap Api, Geo-location Api, Geo-coder Api,
 - Fetch API, Async, Await.
 
+- WEBPACK
+- Implement webpack with various plugins to bundle `js`, minify `css`, and create a `HTMl` template.
+- Split `webpack` config into two modes `production` and `development`.
+- Create a common webpack config and use a `webpack-merge` plugin to keep things `DRY` in production and development configs.
+- Load `DateTime` from `luxon` library.
+- The Google `workbox` plugin is used to precache application shell to make it work offline
+- Various webpack plugins were used for this project.
+
+  - HTMLWebpackPlugin
+  - MiniCssExtractPlugin
+  - OptimizeCSSAssetsPlugin
+  - CssMinimizerPlugin
+  - CleanWebpackPlugin
+  - WorkboxWebpackPlugin
+  - CopyPlugin
+  - TerserPlugin to minimze bundle size
+
+- Service Worker
+- Workbox Plugin is used to precache necessary URLS to enable site to work offline, so as to make it a fully Progressive Web App
+
 ## Live Demo
 
 [Live Demo Link](https://weather-4-you.netlify.app/)
