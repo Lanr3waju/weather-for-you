@@ -3,7 +3,6 @@ import convertToMph from './convertToMph';
 import renderWeatherData from './renderWeatherData';
 import errorPromptMessage from './errorPromptMessage';
 
-const { emptyInputPrompt, spinner } = window;
 const openweatherUrl = 'https://api.openweathermap.org/data/2.5/forecast?';
 const openweatherId = '194095d7d7f3bbd8e788854eb49fa87b';
 
@@ -74,8 +73,8 @@ const fetchWeatherData = async (cityLocation = 'Lagos') => {
     renderWeatherData();
   } catch (e) {
     errorPromptMessage(e.message);
-    emptyInputPrompt.classList.remove('none');
-    spinner.classList.add('none');
+    window.emptyInputPrompt.classList.remove('none');
+    window.spinner.classList.add('none');
   }
 };
 
