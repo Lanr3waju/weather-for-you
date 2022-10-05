@@ -9,8 +9,8 @@ const handleToggleUnits = () => {
   if (document.querySelector('.weather-forecast')) {
     const mainTemp = (index) => data[index].mainTemp;
     const feelsLike = (index) => data[index].feelsLike;
-    const maxTemp = (index) => data[index].maxTemp;
-    const minTemp = (index) => data[index].minTemp;
+    const humidity = (index) => data[index].humid;
+    const windSpeed = (index) => data[index].windSpeed;
 
     const mainFeelsTemp = document.getElementsByClassName('main-feels');
     const minMaxTemp = document.getElementsByClassName('max-min');
@@ -27,11 +27,11 @@ const handleToggleUnits = () => {
     mainFeelsTemp[2].textContent = `Main-Temp (Feels-Like): ${mainTemp(2)} ${tempSymbol} - ${feelsLike(2)} ${tempSymbol}`;
     mainFeelsTemp[3].textContent = `Main-Temp (Feels-Like): ${mainTemp(3)} ${tempSymbol} - ${feelsLike(3)} ${tempSymbol}`;
 
-    // Update textContent for future weather (Max temperature and Minimum Temperature)
-    minMaxTemp[0].textContent = `Max-Min Temp: ${maxTemp(0)} ${tempSymbol} - ${minTemp(0)} ${tempSymbol}`;
-    minMaxTemp[1].textContent = `Max-Min Temp: ${maxTemp(1)} ${tempSymbol} - ${minTemp(1)} ${tempSymbol}`;
-    minMaxTemp[2].textContent = `Max-Min Temp: ${maxTemp(2)} ${tempSymbol} - ${minTemp(2)} ${tempSymbol}`;
-    minMaxTemp[3].textContent = `Max-Min Temp: ${maxTemp(3)} ${tempSymbol} - ${minTemp(3)} ${tempSymbol}`;
+    // Update textContent for future weather (Humidity and WindSpeed)
+    minMaxTemp[0].textContent = `Humidity - Wind speed: ${humidity(0)}% - ${windSpeed(0)} ${windUnit}`;
+    minMaxTemp[1].textContent = `Humidity - Wind speed: ${humidity(1)}% - ${windSpeed(1)} ${windUnit}`;
+    minMaxTemp[2].textContent = `Humidity - Wind speed: ${humidity(2)}% - ${windSpeed(2)} ${windUnit}`;
+    minMaxTemp[3].textContent = `Humidity - Wind speed: ${humidity(3)}% - ${windSpeed(3)} ${windUnit}`;
   }
   return data;
 };
