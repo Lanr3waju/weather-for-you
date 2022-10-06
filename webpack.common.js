@@ -1,5 +1,3 @@
-require('dotenv').config();
-
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
@@ -14,6 +12,13 @@ module.exports = {
     './src/js/index.js',
     './src/css/index.css',
   ],
+  resolve: {
+    extensions: ['.js', '.jsx', '.json', '.ts', '.tsx', '.env'],
+    fallback: {
+      fs: false,
+      path: require.resolve('path-browserify'),
+    },
+  },
   output: {
     filename: 'bundle.js',
     path: path.resolve(__dirname, 'dist'),

@@ -9,11 +9,9 @@ window.inp = document.querySelector('#text-inp');
 window.windUnit = 'km/h';
 window.tempSymbol = '° C';
 window.daysOfTheWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('./service-worker.js');
   });
 }
-
 startApp();

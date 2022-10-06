@@ -34,11 +34,11 @@
     "@babel/plugin-transform-modules-commonjs": "^7.18.2",
     "@babel/preset-env": "^7.18.2",
     "eslint": "^8.21.0",
+    "path-browserify": "^1.0.1",
     "style-loader": "^3.3.1",
     "stylelint": "^14.10.0",
     "stylelint-config-standard": "^27.0.0",
     "stylelint-csstree-validator": "^2.0.0",
-    "webpack": "^5.72.1",
     "webpack-cli": "^4.9.2",
     "webpack-dev-server": "^4.9.0",
     "webpack-fix-style-only-entries": "^0.6.1"
@@ -48,6 +48,7 @@
     "clean-webpack-plugin": "^4.0.0",
     "copy-webpack-plugin": "^11.0.0",
     "css-loader": "^6.7.1",
+    "dotenv-webpack": "^7.1.1",
     "css-minimizer-webpack-plugin": "^4.0.0",
     "cssnano": "^5.1.8",
     "dotenv": "^16.0.3",
@@ -57,6 +58,7 @@
     "mini-css-extract-plugin": "^2.6.0",
     "prettier": "^2.7.1",
     "terser-webpack-plugin": "^5.3.1",
+    "webpack": "^5.72.1",
     "webpack-merge": "^5.8.0",
     "workbox-precaching": "^6.5.3",
     "workbox-webpack-plugin": "^6.5.3"
