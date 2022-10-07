@@ -1,4 +1,4 @@
-import handleWeatherBackground from './handleWeatherBackground';
+import handleWeatherBackground from '../handleWeatherBackground';
 
 const createCardForCurrentForecast = apiData => {
   const { currentForecast, weatherForBg } = window;

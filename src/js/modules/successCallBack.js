@@ -1,7 +1,7 @@
 import fetchWeatherData from './fetchWeatherData';
 
 const opencageUrl = 'https://api.opencagedata.com/geocode/v1/json?';
-const opencageId = process.env.GEOCODE_API_KEY;
+const opencageId = '638bda15a7104f78984174b3cfba1ef1';
 
 const successCallBack = async position => {
   const { latitude, longitude } = position.coords;

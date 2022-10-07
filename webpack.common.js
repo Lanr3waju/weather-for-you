@@ -12,13 +12,6 @@ module.exports = {
     './src/js/index.js',
     './src/css/index.css',
   ],
-  resolve: {
-    extensions: ['.js', '.jsx', '.json', '.ts', '.tsx', '.env'],
-    fallback: {
-      fs: false,
-      path: require.resolve('path-browserify'),
-    },
-  },
   output: {
     filename: 'bundle.js',
     path: path.resolve(__dirname, 'dist'),

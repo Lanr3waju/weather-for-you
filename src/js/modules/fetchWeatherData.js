@@ -4,7 +4,7 @@ import renderWeatherData from './renderWeatherData';
 import errorPromptMessage from './errorPromptMessage';
 
 const openweatherUrl = 'https://api.openweathermap.org/data/2.5/forecast?';
-const openweatherId = process.env.WEATHER_API_KEY;
+const openweatherId = '194095d7d7f3bbd8e788854eb49fa87b';
 
 const fetchWeatherData = async (cityLocation = 'Lagos') => {
   try {
