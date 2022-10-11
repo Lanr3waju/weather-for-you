@@ -12,9 +12,33 @@
 
 ## Built With
 
-- HTML, CSS, JavaScript
+- ### Semantic HTML5 markup
+- ### CSS custom properties
+  - Pseudo-selectors (hover; to add hover effect to certain elements)
+  - Pseudo-elements
+  - Position property
+  - Media queries to make page responsive for mobile
+  - `Flexbox`
+  - Transition property
+  - Animation
+  - `Box-Shadow` & `Text-Shadow` Properties.
+
 - OpenWeatherMap Api, Geo-location Api, Geo-coder Api,
-- Fetch API, Async, Await.
+
+- ### JavaScript
+
+- Implemented DOM manipulation in various parts of the project to make page dynamic.
+- JS `Objects`, `Arrays`, & `Arrays of objects` to store data of similar items.
+- Used Arrow Functions, `spread operators`  and `{ object destructuring}` methods to match the modern conventions.
+- Made use of various `JS` objects and methods such as; `node.createElement()`, `node.AppendChild()`, `node.replaceChild()`, etc.
+- Implemented `array.forEach()`, through the course of the project to loop through `objects` in the `Objects Array`; thus making it possible to manipulate the objects and produce desired result.
+- Made use of `if Statements` to match specific use cases.
+- Implement the use of `eventListeners` to make 'add' & 'remove' buttons functional.
+- The `node.localStorage` `set()` & `get()` methods were used to store and retrieve user inputs.
+- Made use of the `HTMLCollection` API with DOM selector `document.querySelectorAll()` to manipulate a list of elements with same class.
+- Implement `JS - Class` with static methods.
+- Fetch API
+- Promise and callbacks using (Async and Await.)
 
 - WEBPACK
 - Implement webpack with various plugins to bundle `js`, minify `css`, and create a `HTMl` template.
@@ -31,7 +55,7 @@
   - CleanWebpackPlugin
   - WorkboxWebpackPlugin
   - CopyPlugin
-  - TerserPlugin to minimze bundle size
+  - TerserPlugin to minimize bundle size
 
 - Service Worker
 - Workbox Plugin is used to precache necessary URLS to enable site to work offline, so as to make it a fully Progressive Web App
