@@ -161,6 +161,11 @@ header {
   border: none;
 }
 
+.input,
+.search {
+  box-shadow: #0c141c 0 10px 20px -5px;
+}
+
 .input:focus {
   border: none;
   outline: none;
