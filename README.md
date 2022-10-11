@@ -13,7 +13,9 @@
 ## Built With
 
 - ### Semantic HTML5 markup
+
 - ### CSS custom properties
+
   - Pseudo-selectors (hover; to add hover effect to certain elements)
   - Pseudo-elements
   - Position property
@@ -29,7 +31,7 @@
 
 - Implemented DOM manipulation in various parts of the project to make page dynamic.
 - JS `Objects`, `Arrays`, & `Arrays of objects` to store data of similar items.
-- Used Arrow Functions, `spread operators`  and `{ object destructuring}` methods to match the modern conventions.
+- Used Arrow Functions, `spread operators` and `{ object destructuring}` methods to match the modern conventions.
 - Made use of various `JS` objects and methods such as; `node.createElement()`, `node.AppendChild()`, `node.replaceChild()`, etc.
 - Implemented `array.forEach()`, through the course of the project to loop through `objects` in the `Objects Array`; thus making it possible to manipulate the objects and produce desired result.
 - Made use of `if Statements` to match specific use cases.
