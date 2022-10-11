@@ -2,7 +2,7 @@
 
 > This is a weather app that displays the weather forecast for 4 days.
 
-![screenshot](./img/preview.PNG)
+![screenshot](./src/img/preview.PNG)
 
 ## The weather app displays weather data for the location entered in the search bar or by obtaining the location of the deviceif user allows location access
 
