@@ -39,7 +39,7 @@ header {
 }
 
 .cloudy {
-  background: url("../img/Cloudy.svg");
+  background: url("../img/clouds.svg");
   background-size: cover;
 }
 
@@ -59,7 +59,7 @@ header {
 }
 
 .thunder {
-  background: url("../img/animated/thunder.svg");
+  background: url("../img/thunder.svg");
   background-color: #220c3f80;
   background-size: cover;
 }
@@ -159,6 +159,11 @@ header {
   padding: 20px;
   height: 15px;
   border: none;
+}
+
+.input,
+.search {
+  box-shadow: #0c141c 0 10px 20px -5px;
 }
 
 .input:focus {
